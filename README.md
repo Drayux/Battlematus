@@ -1,3 +1,2 @@
 # Battlematus
-Wizard101 Battle Simulator
-THIS IS A NEW PROJECT -- LITTLE PROGRESS HAS BEEN MADE SO FAR
+Wizard101 Battle Simulator (readme pending)
