@@ -1,0 +1,9 @@
+[
+	{"round": 1, "time": 10, "client": {"health": 523, "mana": 32, "pips": 1}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 20, "client": {"health": 438, "mana": 31, "pips": 1}, "opponent": {"health": 435, "pips": 2}}
+],
+[
+	{"round": 1, "time": 30, "client": {"health": 528, "mana": 32, "pips": 1}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 40, "client": {"health": 528, "mana": 31, "pips": 2}, "opponent": {"health": 550, "pips": 2}},
+	{"round": 3, "time": 50, "client": {"health": 323, "mana": 30, "pips": 2}, "opponent": {"health": 425, "pips": 2}}
+],

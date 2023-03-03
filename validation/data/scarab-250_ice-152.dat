@@ -1,0 +1,938 @@
+[
+	{"round": 1, "time": 1674187911, "client": {"health": 7590, "mana": 315, "pips": 1}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674187932, "client": {"health": 7590, "mana": 314, "pips": 2}, "opponent": {"health": 550, "pips": 2}},
+	{"round": 3, "time": 1674187955, "client": {"health": 7590, "mana": 313, "pips": 1}, "opponent": {"health": 455, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674187985, "client": {"health": 7590, "mana": 313, "pips": 1}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674188011, "client": {"health": 7590, "mana": 312, "pips": 0}, "opponent": {"health": 475, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674188041, "client": {"health": 7590, "mana": 312, "pips": 1}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674188072, "client": {"health": 7590, "mana": 311, "pips": 1}, "opponent": {"health": 455, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674188104, "client": {"health": 7590, "mana": 311, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674188126, "client": {"health": 7590, "mana": 310, "pips": 1}, "opponent": {"health": 445, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674188157, "client": {"health": 7590, "mana": 315, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674188175, "client": {"health": 7590, "mana": 314, "pips": 0}, "opponent": {"health": 455, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674188206, "client": {"health": 7590, "mana": 314, "pips": 1}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674188237, "client": {"health": 7590, "mana": 313, "pips": 0}, "opponent": {"health": 485, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674188270, "client": {"health": 7590, "mana": 313, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674188292, "client": {"health": 7590, "mana": 312, "pips": 0}, "opponent": {"health": 485, "pips": 0}}
+],
+[
+	{"round": 1, "time": 1674188322, "client": {"health": 7590, "mana": 312, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674188349, "client": {"health": 7590, "mana": 311, "pips": 1}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 3, "time": 1674188376, "client": {"health": 7590, "mana": 310, "pips": 0}, "opponent": {"health": 455, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674188438, "client": {"health": 7590, "mana": 315, "pips": 1}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674188468, "client": {"health": 7590, "mana": 314, "pips": 0}, "opponent": {"health": 455, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674188499, "client": {"health": 7590, "mana": 314, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674188531, "client": {"health": 7590, "mana": 313, "pips": 0}, "opponent": {"health": 485, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674188562, "client": {"health": 7590, "mana": 315, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674188592, "client": {"health": 7590, "mana": 314, "pips": 0}, "opponent": {"health": 455, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674188622, "client": {"health": 7590, "mana": 314, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674188654, "client": {"health": 7590, "mana": 313, "pips": 0}, "opponent": {"health": 455, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674188685, "client": {"health": 7590, "mana": 313, "pips": 1}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674188708, "client": {"health": 7590, "mana": 312, "pips": 0}, "opponent": {"health": 455, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674188739, "client": {"health": 7590, "mana": 312, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674188759, "client": {"health": 7590, "mana": 311, "pips": 0}, "opponent": {"health": 485, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674188790, "client": {"health": 7590, "mana": 311, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674188815, "client": {"health": 7590, "mana": 310, "pips": 1}, "opponent": {"health": 445, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674188846, "client": {"health": 7590, "mana": 310, "pips": 1}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674188863, "client": {"health": 7590, "mana": 309, "pips": 2}, "opponent": {"health": 550, "pips": 2}},
+	{"round": 3, "time": 1674188893, "client": {"health": 7590, "mana": 308, "pips": 1}, "opponent": {"health": 485, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674188924, "client": {"health": 7590, "mana": 308, "pips": 1}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674188948, "client": {"health": 7590, "mana": 307, "pips": 1}, "opponent": {"health": 465, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674188979, "client": {"health": 7590, "mana": 307, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674189005, "client": {"health": 7590, "mana": 306, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 3, "time": 1674189035, "client": {"health": 7590, "mana": 305, "pips": 0}, "opponent": {"health": 475, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674189066, "client": {"health": 7590, "mana": 305, "pips": 1}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674189094, "client": {"health": 7590, "mana": 304, "pips": 0}, "opponent": {"health": 485, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674189125, "client": {"health": 7590, "mana": 304, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674189152, "client": {"health": 7590, "mana": 303, "pips": 0}, "opponent": {"health": 465, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674189183, "client": {"health": 7590, "mana": 303, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674189204, "client": {"health": 7590, "mana": 302, "pips": 0}, "opponent": {"health": 465, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674189236, "client": {"health": 7590, "mana": 302, "pips": 1}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674189262, "client": {"health": 7590, "mana": 301, "pips": 1}, "opponent": {"health": 445, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674189292, "client": {"health": 7590, "mana": 301, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674189324, "client": {"health": 7590, "mana": 300, "pips": 1}, "opponent": {"health": 445, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674189354, "client": {"health": 7590, "mana": 300, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674189381, "client": {"health": 7590, "mana": 299, "pips": 0}, "opponent": {"health": 475, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674189411, "client": {"health": 7590, "mana": 299, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674189434, "client": {"health": 7590, "mana": 298, "pips": 0}, "opponent": {"health": 485, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674189464, "client": {"health": 7590, "mana": 315, "pips": 1}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674189489, "client": {"health": 7590, "mana": 314, "pips": 0}, "opponent": {"health": 465, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674189520, "client": {"health": 7590, "mana": 314, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674189552, "client": {"health": 7590, "mana": 313, "pips": 0}, "opponent": {"health": 465, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674189583, "client": {"health": 7590, "mana": 313, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674189614, "client": {"health": 7590, "mana": 312, "pips": 0}, "opponent": {"health": 455, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674189645, "client": {"health": 7590, "mana": 312, "pips": 1}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674189663, "client": {"health": 7590, "mana": 311, "pips": 0}, "opponent": {"health": 465, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674189693, "client": {"health": 7590, "mana": 311, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674189714, "client": {"health": 7590, "mana": 310, "pips": 1}, "opponent": {"health": 550, "pips": 2}},
+	{"round": 3, "time": 1674189737, "client": {"health": 7590, "mana": 309, "pips": 0}, "opponent": {"health": 455, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674189769, "client": {"health": 7590, "mana": 309, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674189800, "client": {"health": 7590, "mana": 308, "pips": 0}, "opponent": {"health": 455, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674189833, "client": {"health": 7590, "mana": 308, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674189859, "client": {"health": 7590, "mana": 307, "pips": 1}, "opponent": {"health": 485, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674189889, "client": {"health": 7590, "mana": 307, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674189917, "client": {"health": 7590, "mana": 306, "pips": 0}, "opponent": {"health": 485, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674189948, "client": {"health": 7590, "mana": 306, "pips": 1}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674189966, "client": {"health": 7590, "mana": 305, "pips": 0}, "opponent": {"health": 485, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674189998, "client": {"health": 7590, "mana": 305, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674190029, "client": {"health": 7590, "mana": 304, "pips": 0}, "opponent": {"health": 485, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674190062, "client": {"health": 7590, "mana": 304, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674190091, "client": {"health": 7590, "mana": 303, "pips": 0}, "opponent": {"health": 485, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674190121, "client": {"health": 7590, "mana": 303, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674190147, "client": {"health": 7590, "mana": 302, "pips": 0}, "opponent": {"health": 445, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674190180, "client": {"health": 7590, "mana": 302, "pips": 1}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674190193, "client": {"health": 7590, "mana": 301, "pips": 1}, "opponent": {"health": 550, "pips": 2}},
+	{"round": 3, "time": 1674190218, "client": {"health": 7590, "mana": 300, "pips": 0}, "opponent": {"health": 455, "pips": 3}}
+],
+[
+	{"round": 1, "time": 1674190250, "client": {"health": 7590, "mana": 300, "pips": 1}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674190271, "client": {"health": 7590, "mana": 299, "pips": 0}, "opponent": {"health": 445, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674190301, "client": {"health": 7590, "mana": 299, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674190321, "client": {"health": 7590, "mana": 298, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 3, "time": 1674190350, "client": {"health": 7590, "mana": 297, "pips": 0}, "opponent": {"health": 465, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674190385, "client": {"health": 7590, "mana": 315, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674190408, "client": {"health": 7590, "mana": 314, "pips": 0}, "opponent": {"health": 455, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674190441, "client": {"health": 7590, "mana": 314, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674190472, "client": {"health": 7590, "mana": 313, "pips": 0}, "opponent": {"health": 455, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674190504, "client": {"health": 7590, "mana": 313, "pips": 1}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674190530, "client": {"health": 7590, "mana": 312, "pips": 1}, "opponent": {"health": 455, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674190564, "client": {"health": 7590, "mana": 312, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674190585, "client": {"health": 7590, "mana": 311, "pips": 0}, "opponent": {"health": 455, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674190616, "client": {"health": 7590, "mana": 311, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674190638, "client": {"health": 7590, "mana": 310, "pips": 0}, "opponent": {"health": 485, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674190668, "client": {"health": 7590, "mana": 310, "pips": 1}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674190700, "client": {"health": 7590, "mana": 309, "pips": 0}, "opponent": {"health": 475, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674190730, "client": {"health": 7590, "mana": 315, "pips": 1}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674190754, "client": {"health": 7590, "mana": 314, "pips": 0}, "opponent": {"health": 455, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674190816, "client": {"health": 7590, "mana": 314, "pips": 1}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674190837, "client": {"health": 7590, "mana": 313, "pips": 1}, "opponent": {"health": 455, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674190868, "client": {"health": 7590, "mana": 313, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674190899, "client": {"health": 7590, "mana": 312, "pips": 0}, "opponent": {"health": 475, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674190931, "client": {"health": 7590, "mana": 312, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674190957, "client": {"health": 7590, "mana": 311, "pips": 1}, "opponent": {"health": 445, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674190987, "client": {"health": 7590, "mana": 315, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674191017, "client": {"health": 7590, "mana": 314, "pips": 1}, "opponent": {"health": 485, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674191047, "client": {"health": 7590, "mana": 314, "pips": 1}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674191080, "client": {"health": 7590, "mana": 313, "pips": 1}, "opponent": {"health": 455, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674191112, "client": {"health": 7590, "mana": 313, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674191129, "client": {"health": 7590, "mana": 312, "pips": 0}, "opponent": {"health": 485, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674191159, "client": {"health": 7590, "mana": 312, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674191186, "client": {"health": 7590, "mana": 311, "pips": 0}, "opponent": {"health": 445, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674191218, "client": {"health": 7590, "mana": 311, "pips": 1}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674191244, "client": {"health": 7590, "mana": 310, "pips": 0}, "opponent": {"health": 465, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674191274, "client": {"health": 7590, "mana": 310, "pips": 1}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674191305, "client": {"health": 7590, "mana": 309, "pips": 0}, "opponent": {"health": 455, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674191335, "client": {"health": 7590, "mana": 315, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674191349, "client": {"health": 7590, "mana": 314, "pips": 1}, "opponent": {"health": 455, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674191381, "client": {"health": 7590, "mana": 314, "pips": 1}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674191394, "client": {"health": 7590, "mana": 313, "pips": 0}, "opponent": {"health": 475, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674191425, "client": {"health": 7590, "mana": 313, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674191448, "client": {"health": 7590, "mana": 312, "pips": 1}, "opponent": {"health": 465, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674191478, "client": {"health": 7590, "mana": 312, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674191503, "client": {"health": 7590, "mana": 311, "pips": 0}, "opponent": {"health": 465, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674191535, "client": {"health": 7590, "mana": 311, "pips": 1}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674191565, "client": {"health": 7590, "mana": 310, "pips": 0}, "opponent": {"health": 455, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674191601, "client": {"health": 7590, "mana": 315, "pips": 1}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674191627, "client": {"health": 7590, "mana": 314, "pips": 2}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 3, "time": 1674191648, "client": {"health": 7590, "mana": 313, "pips": 1}, "opponent": {"health": 445, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674191679, "client": {"health": 7590, "mana": 313, "pips": 1}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674191703, "client": {"health": 7590, "mana": 312, "pips": 0}, "opponent": {"health": 455, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674191733, "client": {"health": 7590, "mana": 312, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674191750, "client": {"health": 7590, "mana": 311, "pips": 0}, "opponent": {"health": 485, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674191782, "client": {"health": 7590, "mana": 311, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674191810, "client": {"health": 7590, "mana": 310, "pips": 1}, "opponent": {"health": 465, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674191841, "client": {"health": 7590, "mana": 310, "pips": 1}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674191864, "client": {"health": 7590, "mana": 309, "pips": 0}, "opponent": {"health": 465, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674191895, "client": {"health": 7590, "mana": 309, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674191923, "client": {"health": 7590, "mana": 308, "pips": 1}, "opponent": {"health": 465, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674191954, "client": {"health": 7590, "mana": 315, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674191972, "client": {"health": 7590, "mana": 314, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 3, "time": 1674191994, "client": {"health": 7590, "mana": 313, "pips": 1}, "opponent": {"health": 485, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674192024, "client": {"health": 7590, "mana": 313, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674192041, "client": {"health": 7590, "mana": 312, "pips": 0}, "opponent": {"health": 455, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674192072, "client": {"health": 7590, "mana": 312, "pips": 1}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674192096, "client": {"health": 7590, "mana": 311, "pips": 1}, "opponent": {"health": 485, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674192126, "client": {"health": 7590, "mana": 311, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674192148, "client": {"health": 7590, "mana": 310, "pips": 0}, "opponent": {"health": 465, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674192178, "client": {"health": 7590, "mana": 310, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674192199, "client": {"health": 7590, "mana": 309, "pips": 0}, "opponent": {"health": 485, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674192230, "client": {"health": 7590, "mana": 309, "pips": 1}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674192260, "client": {"health": 7590, "mana": 308, "pips": 1}, "opponent": {"health": 445, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674192290, "client": {"health": 7590, "mana": 308, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674192322, "client": {"health": 7590, "mana": 307, "pips": 1}, "opponent": {"health": 445, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674192353, "client": {"health": 7590, "mana": 315, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674192380, "client": {"health": 7590, "mana": 314, "pips": 0}, "opponent": {"health": 485, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674192410, "client": {"health": 7590, "mana": 314, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674192437, "client": {"health": 7590, "mana": 313, "pips": 1}, "opponent": {"health": 475, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674192467, "client": {"health": 7590, "mana": 313, "pips": 1}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674192498, "client": {"health": 7590, "mana": 312, "pips": 1}, "opponent": {"health": 485, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674192529, "client": {"health": 7590, "mana": 312, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674192556, "client": {"health": 7590, "mana": 311, "pips": 1}, "opponent": {"health": 475, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674192586, "client": {"health": 7590, "mana": 315, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674192612, "client": {"health": 7590, "mana": 314, "pips": 1}, "opponent": {"health": 465, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674192642, "client": {"health": 7590, "mana": 315, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674192655, "client": {"health": 7590, "mana": 314, "pips": 0}, "opponent": {"health": 550, "pips": 2}},
+	{"round": 3, "time": 1674192687, "client": {"health": 7590, "mana": 313, "pips": 0}, "opponent": {"health": 455, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674192720, "client": {"health": 7590, "mana": 315, "pips": 1}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674192733, "client": {"health": 7590, "mana": 314, "pips": 1}, "opponent": {"health": 475, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674192764, "client": {"health": 7590, "mana": 314, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674192789, "client": {"health": 7590, "mana": 313, "pips": 0}, "opponent": {"health": 465, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674192819, "client": {"health": 7590, "mana": 315, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674192852, "client": {"health": 7590, "mana": 314, "pips": 0}, "opponent": {"health": 485, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674192882, "client": {"health": 7590, "mana": 314, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674192914, "client": {"health": 7590, "mana": 313, "pips": 0}, "opponent": {"health": 475, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674192944, "client": {"health": 7590, "mana": 313, "pips": 1}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674192970, "client": {"health": 7590, "mana": 312, "pips": 0}, "opponent": {"health": 485, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674193001, "client": {"health": 7590, "mana": 312, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674193022, "client": {"health": 7590, "mana": 311, "pips": 1}, "opponent": {"health": 550, "pips": 2}},
+	{"round": 3, "time": 1674193045, "client": {"health": 7590, "mana": 310, "pips": 0}, "opponent": {"health": 455, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674193075, "client": {"health": 7590, "mana": 310, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674193093, "client": {"health": 7590, "mana": 309, "pips": 0}, "opponent": {"health": 445, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674193124, "client": {"health": 7590, "mana": 315, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674193142, "client": {"health": 7590, "mana": 314, "pips": 0}, "opponent": {"health": 550, "pips": 2}},
+	{"round": 3, "time": 1674193176, "client": {"health": 7590, "mana": 313, "pips": 0}, "opponent": {"health": 485, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674193206, "client": {"health": 7590, "mana": 313, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674193227, "client": {"health": 7590, "mana": 312, "pips": 0}, "opponent": {"health": 455, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674193258, "client": {"health": 7590, "mana": 312, "pips": 1}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674193283, "client": {"health": 7590, "mana": 311, "pips": 0}, "opponent": {"health": 445, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674193313, "client": {"health": 7590, "mana": 311, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674193326, "client": {"health": 7590, "mana": 310, "pips": 1}, "opponent": {"health": 475, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674193358, "client": {"health": 7590, "mana": 310, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674193378, "client": {"health": 7590, "mana": 309, "pips": 1}, "opponent": {"health": 455, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674193410, "client": {"health": 7590, "mana": 309, "pips": 1}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674193432, "client": {"health": 7590, "mana": 308, "pips": 0}, "opponent": {"health": 475, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674193493, "client": {"health": 7590, "mana": 308, "pips": 1}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674193514, "client": {"health": 7590, "mana": 307, "pips": 1}, "opponent": {"health": 485, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674193544, "client": {"health": 7590, "mana": 307, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674193566, "client": {"health": 7590, "mana": 306, "pips": 0}, "opponent": {"health": 550, "pips": 2}},
+	{"round": 3, "time": 1674193589, "client": {"health": 7590, "mana": 305, "pips": 0}, "opponent": {"health": 465, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674193619, "client": {"health": 7590, "mana": 305, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674193637, "client": {"health": 7590, "mana": 304, "pips": 0}, "opponent": {"health": 455, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674193667, "client": {"health": 7590, "mana": 304, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674193695, "client": {"health": 7590, "mana": 303, "pips": 1}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 3, "time": 1674193713, "client": {"health": 7590, "mana": 302, "pips": 1}, "opponent": {"health": 475, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674193744, "client": {"health": 7590, "mana": 302, "pips": 1}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674193770, "client": {"health": 7590, "mana": 301, "pips": 1}, "opponent": {"health": 475, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674193801, "client": {"health": 7590, "mana": 301, "pips": 1}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674193827, "client": {"health": 7590, "mana": 300, "pips": 0}, "opponent": {"health": 465, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674193858, "client": {"health": 7590, "mana": 300, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674193887, "client": {"health": 7590, "mana": 299, "pips": 1}, "opponent": {"health": 485, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674193918, "client": {"health": 7590, "mana": 299, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674193948, "client": {"health": 7590, "mana": 298, "pips": 0}, "opponent": {"health": 475, "pips": 0}}
+],
+[
+	{"round": 1, "time": 1674193980, "client": {"health": 7590, "mana": 315, "pips": 1}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674194003, "client": {"health": 7590, "mana": 314, "pips": 1}, "opponent": {"health": 455, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674194034, "client": {"health": 7590, "mana": 314, "pips": 1}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674194055, "client": {"health": 7590, "mana": 313, "pips": 1}, "opponent": {"health": 465, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674194086, "client": {"health": 7590, "mana": 313, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674194111, "client": {"health": 7590, "mana": 312, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 3, "time": 1674194129, "client": {"health": 7590, "mana": 311, "pips": 1}, "opponent": {"health": 455, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674194159, "client": {"health": 7590, "mana": 311, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674194181, "client": {"health": 7590, "mana": 310, "pips": 0}, "opponent": {"health": 485, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674194212, "client": {"health": 7590, "mana": 310, "pips": 1}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674194234, "client": {"health": 7590, "mana": 309, "pips": 0}, "opponent": {"health": 465, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674194264, "client": {"health": 7590, "mana": 309, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674194285, "client": {"health": 7590, "mana": 308, "pips": 0}, "opponent": {"health": 445, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674194316, "client": {"health": 7590, "mana": 308, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674194338, "client": {"health": 7590, "mana": 307, "pips": 0}, "opponent": {"health": 475, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674194369, "client": {"health": 7590, "mana": 307, "pips": 1}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674194387, "client": {"health": 7590, "mana": 306, "pips": 0}, "opponent": {"health": 445, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674194418, "client": {"health": 7590, "mana": 306, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674194441, "client": {"health": 7590, "mana": 305, "pips": 1}, "opponent": {"health": 475, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674194472, "client": {"health": 7590, "mana": 305, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674194495, "client": {"health": 7590, "mana": 304, "pips": 0}, "opponent": {"health": 445, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674194588, "client": {"health": 7590, "mana": 303, "pips": 1}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674194620, "client": {"health": 7590, "mana": 302, "pips": 0}, "opponent": {"health": 465, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674194710, "client": {"health": 7590, "mana": 315, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674194742, "client": {"health": 7590, "mana": 314, "pips": 1}, "opponent": {"health": 475, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674194774, "client": {"health": 7590, "mana": 315, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674194795, "client": {"health": 7590, "mana": 314, "pips": 0}, "opponent": {"health": 445, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674194825, "client": {"health": 7590, "mana": 314, "pips": 1}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674194856, "client": {"health": 7590, "mana": 313, "pips": 0}, "opponent": {"health": 455, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674194886, "client": {"health": 7590, "mana": 313, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674194911, "client": {"health": 7590, "mana": 312, "pips": 0}, "opponent": {"health": 465, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674194942, "client": {"health": 7590, "mana": 312, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674194971, "client": {"health": 7590, "mana": 311, "pips": 0}, "opponent": {"health": 485, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674195001, "client": {"health": 7590, "mana": 315, "pips": 1}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674195015, "client": {"health": 7590, "mana": 314, "pips": 1}, "opponent": {"health": 445, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674195046, "client": {"health": 7590, "mana": 314, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674195067, "client": {"health": 7590, "mana": 313, "pips": 0}, "opponent": {"health": 475, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674195097, "client": {"health": 7590, "mana": 315, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674195129, "client": {"health": 7590, "mana": 314, "pips": 1}, "opponent": {"health": 465, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674195159, "client": {"health": 7590, "mana": 314, "pips": 1}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674195188, "client": {"health": 7590, "mana": 313, "pips": 0}, "opponent": {"health": 445, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674195219, "client": {"health": 7590, "mana": 313, "pips": 1}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674195240, "client": {"health": 7590, "mana": 312, "pips": 2}, "opponent": {"health": 550, "pips": 2}},
+	{"round": 3, "time": 1674195265, "client": {"health": 7590, "mana": 311, "pips": 1}, "opponent": {"health": 455, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674195295, "client": {"health": 7590, "mana": 311, "pips": 1}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674195324, "client": {"health": 7590, "mana": 310, "pips": 0}, "opponent": {"health": 485, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674198073, "client": {"health": 7590, "mana": 309, "pips": 1}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674198096, "client": {"health": 7590, "mana": 308, "pips": 0}, "opponent": {"health": 475, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674198127, "client": {"health": 7590, "mana": 308, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674198149, "client": {"health": 7590, "mana": 307, "pips": 1}, "opponent": {"health": 465, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674198180, "client": {"health": 7590, "mana": 307, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674198193, "client": {"health": 7590, "mana": 306, "pips": 1}, "opponent": {"health": 475, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674198224, "client": {"health": 7590, "mana": 306, "pips": 1}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674198253, "client": {"health": 7590, "mana": 305, "pips": 0}, "opponent": {"health": 455, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674198283, "client": {"health": 7590, "mana": 305, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674198305, "client": {"health": 7590, "mana": 304, "pips": 0}, "opponent": {"health": 455, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674198751, "client": {"health": 7590, "mana": 314, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674198778, "client": {"health": 7590, "mana": 313, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 3, "time": 1674198799, "client": {"health": 7590, "mana": 312, "pips": 0}, "opponent": {"health": 475, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674198831, "client": {"health": 7590, "mana": 312, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674198845, "client": {"health": 7590, "mana": 311, "pips": 0}, "opponent": {"health": 445, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674198875, "client": {"health": 7590, "mana": 311, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674198905, "client": {"health": 7590, "mana": 310, "pips": 0}, "opponent": {"health": 455, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674199009, "client": {"health": 7590, "mana": 308, "pips": 1}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674199022, "client": {"health": 7590, "mana": 307, "pips": 1}, "opponent": {"health": 550, "pips": 2}},
+	{"round": 3, "time": 1674199053, "client": {"health": 7590, "mana": 306, "pips": 0}, "opponent": {"health": 445, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674199083, "client": {"health": 7590, "mana": 306, "pips": 1}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674199109, "client": {"health": 7590, "mana": 305, "pips": 1}, "opponent": {"health": 475, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674199139, "client": {"health": 7590, "mana": 305, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674199165, "client": {"health": 7590, "mana": 304, "pips": 1}, "opponent": {"health": 485, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674199195, "client": {"health": 7590, "mana": 304, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674199218, "client": {"health": 7590, "mana": 303, "pips": 0}, "opponent": {"health": 445, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674199249, "client": {"health": 7590, "mana": 303, "pips": 1}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674199277, "client": {"health": 7590, "mana": 302, "pips": 0}, "opponent": {"health": 475, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674199309, "client": {"health": 7590, "mana": 302, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674199333, "client": {"health": 7590, "mana": 301, "pips": 0}, "opponent": {"health": 465, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674199363, "client": {"health": 7590, "mana": 301, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674199387, "client": {"health": 7590, "mana": 300, "pips": 0}, "opponent": {"health": 475, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674199417, "client": {"health": 7590, "mana": 300, "pips": 1}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674199448, "client": {"health": 7590, "mana": 299, "pips": 1}, "opponent": {"health": 485, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674199479, "client": {"health": 7590, "mana": 315, "pips": 1}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674199510, "client": {"health": 7590, "mana": 314, "pips": 0}, "opponent": {"health": 485, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674199540, "client": {"health": 7590, "mana": 314, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674199566, "client": {"health": 7590, "mana": 313, "pips": 0}, "opponent": {"health": 485, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674199597, "client": {"health": 7590, "mana": 315, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674199621, "client": {"health": 7590, "mana": 314, "pips": 1}, "opponent": {"health": 455, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674199652, "client": {"health": 7590, "mana": 314, "pips": 1}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674199675, "client": {"health": 7590, "mana": 313, "pips": 0}, "opponent": {"health": 445, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674199705, "client": {"health": 7590, "mana": 313, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674199728, "client": {"health": 7590, "mana": 312, "pips": 0}, "opponent": {"health": 485, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674199758, "client": {"health": 7590, "mana": 315, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674199789, "client": {"health": 7590, "mana": 314, "pips": 1}, "opponent": {"health": 455, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674199822, "client": {"health": 7590, "mana": 314, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674199848, "client": {"health": 7590, "mana": 313, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 3, "time": 1674199870, "client": {"health": 7590, "mana": 312, "pips": 0}, "opponent": {"health": 445, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674200028, "client": {"health": 7590, "mana": 315, "pips": 1}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674200049, "client": {"health": 7590, "mana": 314, "pips": 0}, "opponent": {"health": 485, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674200079, "client": {"health": 7590, "mana": 315, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674200101, "client": {"health": 7590, "mana": 314, "pips": 1}, "opponent": {"health": 465, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674200131, "client": {"health": 7590, "mana": 314, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674200157, "client": {"health": 7590, "mana": 313, "pips": 0}, "opponent": {"health": 455, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674200188, "client": {"health": 7590, "mana": 313, "pips": 1}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674200201, "client": {"health": 7590, "mana": 312, "pips": 1}, "opponent": {"health": 465, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674200231, "client": {"health": 7590, "mana": 315, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674200259, "client": {"health": 7590, "mana": 314, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 3, "time": 1674200280, "client": {"health": 7590, "mana": 313, "pips": 0}, "opponent": {"health": 445, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674200311, "client": {"health": 7590, "mana": 313, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674200342, "client": {"health": 7590, "mana": 312, "pips": 0}, "opponent": {"health": 475, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674200372, "client": {"health": 7590, "mana": 312, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674200390, "client": {"health": 7590, "mana": 311, "pips": 1}, "opponent": {"health": 550, "pips": 2}},
+	{"round": 3, "time": 1674200414, "client": {"health": 7590, "mana": 310, "pips": 1}, "opponent": {"health": 445, "pips": 3}}
+],
+[
+	{"round": 1, "time": 1674200445, "client": {"health": 7590, "mana": 310, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674200476, "client": {"health": 7590, "mana": 309, "pips": 0}, "opponent": {"health": 445, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674200506, "client": {"health": 7590, "mana": 309, "pips": 1}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674200535, "client": {"health": 7590, "mana": 308, "pips": 1}, "opponent": {"health": 445, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674200566, "client": {"health": 7590, "mana": 308, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674200597, "client": {"health": 7590, "mana": 307, "pips": 0}, "opponent": {"health": 485, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674200627, "client": {"health": 7590, "mana": 315, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674200645, "client": {"health": 7590, "mana": 314, "pips": 1}, "opponent": {"health": 475, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674200675, "client": {"health": 7590, "mana": 314, "pips": 1}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674200706, "client": {"health": 7590, "mana": 313, "pips": 1}, "opponent": {"health": 485, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674200737, "client": {"health": 7590, "mana": 313, "pips": 1}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674200763, "client": {"health": 7590, "mana": 312, "pips": 0}, "opponent": {"health": 485, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674200793, "client": {"health": 7590, "mana": 315, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674200815, "client": {"health": 7590, "mana": 314, "pips": 0}, "opponent": {"health": 465, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674200907, "client": {"health": 7590, "mana": 315, "pips": 1}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674200929, "client": {"health": 7590, "mana": 314, "pips": 0}, "opponent": {"health": 455, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674200960, "client": {"health": 7590, "mana": 315, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674200983, "client": {"health": 7590, "mana": 314, "pips": 0}, "opponent": {"health": 485, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674201014, "client": {"health": 7590, "mana": 315, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674201041, "client": {"health": 7590, "mana": 314, "pips": 1}, "opponent": {"health": 455, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674201072, "client": {"health": 7590, "mana": 314, "pips": 1}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674201098, "client": {"health": 7590, "mana": 313, "pips": 1}, "opponent": {"health": 455, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674201128, "client": {"health": 7590, "mana": 313, "pips": 1}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674201158, "client": {"health": 7590, "mana": 312, "pips": 0}, "opponent": {"health": 465, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674201189, "client": {"health": 7590, "mana": 312, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674201215, "client": {"health": 7590, "mana": 311, "pips": 0}, "opponent": {"health": 485, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674201245, "client": {"health": 7590, "mana": 311, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674201277, "client": {"health": 7590, "mana": 310, "pips": 0}, "opponent": {"health": 465, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674201308, "client": {"health": 7590, "mana": 310, "pips": 1}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674201330, "client": {"health": 7590, "mana": 309, "pips": 1}, "opponent": {"health": 550, "pips": 2}},
+	{"round": 3, "time": 1674201353, "client": {"health": 7590, "mana": 308, "pips": 0}, "opponent": {"health": 455, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674201384, "client": {"health": 7590, "mana": 308, "pips": 1}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674201409, "client": {"health": 7590, "mana": 307, "pips": 0}, "opponent": {"health": 485, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674201440, "client": {"health": 7590, "mana": 307, "pips": 1}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674201462, "client": {"health": 7590, "mana": 306, "pips": 0}, "opponent": {"health": 465, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674201493, "client": {"health": 7590, "mana": 306, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674201515, "client": {"health": 7590, "mana": 305, "pips": 0}, "opponent": {"health": 455, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674201547, "client": {"health": 7590, "mana": 315, "pips": 1}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674201578, "client": {"health": 7590, "mana": 314, "pips": 0}, "opponent": {"health": 465, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674201609, "client": {"health": 7590, "mana": 314, "pips": 1}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674201632, "client": {"health": 7590, "mana": 313, "pips": 0}, "opponent": {"health": 465, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674201663, "client": {"health": 7590, "mana": 315, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674201689, "client": {"health": 7590, "mana": 314, "pips": 0}, "opponent": {"health": 485, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674201720, "client": {"health": 7590, "mana": 314, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674201749, "client": {"health": 7590, "mana": 313, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 3, "time": 1674201771, "client": {"health": 7590, "mana": 312, "pips": 1}, "opponent": {"health": 445, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674201802, "client": {"health": 7590, "mana": 312, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674201829, "client": {"health": 7590, "mana": 311, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 3, "time": 1674201855, "client": {"health": 7590, "mana": 310, "pips": 0}, "opponent": {"health": 445, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674201885, "client": {"health": 7590, "mana": 310, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674201915, "client": {"health": 7590, "mana": 309, "pips": 1}, "opponent": {"health": 475, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674201945, "client": {"health": 7590, "mana": 315, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674201967, "client": {"health": 7590, "mana": 314, "pips": 0}, "opponent": {"health": 455, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674201998, "client": {"health": 7590, "mana": 314, "pips": 1}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674202028, "client": {"health": 7590, "mana": 313, "pips": 0}, "opponent": {"health": 475, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674202059, "client": {"health": 7590, "mana": 313, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674202090, "client": {"health": 7590, "mana": 312, "pips": 0}, "opponent": {"health": 465, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674202121, "client": {"health": 7590, "mana": 312, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674202147, "client": {"health": 7590, "mana": 311, "pips": 1}, "opponent": {"health": 485, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674202178, "client": {"health": 7590, "mana": 311, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674202200, "client": {"health": 7590, "mana": 310, "pips": 0}, "opponent": {"health": 465, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674202231, "client": {"health": 7590, "mana": 315, "pips": 1}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674202253, "client": {"health": 7590, "mana": 314, "pips": 0}, "opponent": {"health": 445, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674202284, "client": {"health": 7590, "mana": 314, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674202313, "client": {"health": 7590, "mana": 313, "pips": 0}, "opponent": {"health": 465, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674202344, "client": {"health": 7590, "mana": 313, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674202375, "client": {"health": 7590, "mana": 312, "pips": 0}, "opponent": {"health": 465, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674202405, "client": {"health": 7590, "mana": 312, "pips": 1}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674202427, "client": {"health": 7590, "mana": 311, "pips": 1}, "opponent": {"health": 475, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674202458, "client": {"health": 7590, "mana": 311, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674202475, "client": {"health": 7590, "mana": 310, "pips": 1}, "opponent": {"health": 445, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674202506, "client": {"health": 7590, "mana": 310, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674202527, "client": {"health": 7590, "mana": 309, "pips": 0}, "opponent": {"health": 485, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674202558, "client": {"health": 7590, "mana": 309, "pips": 1}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674202571, "client": {"health": 7590, "mana": 308, "pips": 0}, "opponent": {"health": 455, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674202602, "client": {"health": 7590, "mana": 308, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674202629, "client": {"health": 7590, "mana": 307, "pips": 0}, "opponent": {"health": 465, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674202660, "client": {"health": 7590, "mana": 315, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674202690, "client": {"health": 7590, "mana": 314, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 3, "time": 1674202714, "client": {"health": 7590, "mana": 313, "pips": 1}, "opponent": {"health": 465, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674202745, "client": {"health": 7590, "mana": 313, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674202766, "client": {"health": 7590, "mana": 312, "pips": 1}, "opponent": {"health": 485, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674202798, "client": {"health": 7590, "mana": 312, "pips": 1}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674202823, "client": {"health": 7590, "mana": 311, "pips": 0}, "opponent": {"health": 475, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674202854, "client": {"health": 7590, "mana": 311, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674202867, "client": {"health": 7590, "mana": 310, "pips": 0}, "opponent": {"health": 455, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674202898, "client": {"health": 7590, "mana": 310, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674202916, "client": {"health": 7590, "mana": 309, "pips": 0}, "opponent": {"health": 475, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674202947, "client": {"health": 7590, "mana": 309, "pips": 1}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674202972, "client": {"health": 7590, "mana": 308, "pips": 1}, "opponent": {"health": 445, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674203003, "client": {"health": 7590, "mana": 308, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674203024, "client": {"health": 7590, "mana": 307, "pips": 0}, "opponent": {"health": 475, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674203055, "client": {"health": 7590, "mana": 307, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674203072, "client": {"health": 7590, "mana": 306, "pips": 0}, "opponent": {"health": 465, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674203103, "client": {"health": 7590, "mana": 306, "pips": 1}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674203130, "client": {"health": 7590, "mana": 305, "pips": 0}, "opponent": {"health": 475, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674203162, "client": {"health": 7590, "mana": 305, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674203179, "client": {"health": 7590, "mana": 304, "pips": 0}, "opponent": {"health": 475, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674203211, "client": {"health": 7590, "mana": 315, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674203229, "client": {"health": 7590, "mana": 314, "pips": 1}, "opponent": {"health": 455, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674203260, "client": {"health": 7590, "mana": 314, "pips": 1}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674203282, "client": {"health": 7590, "mana": 313, "pips": 1}, "opponent": {"health": 455, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674203314, "client": {"health": 7590, "mana": 313, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674203335, "client": {"health": 7590, "mana": 312, "pips": 1}, "opponent": {"health": 485, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674203366, "client": {"health": 7590, "mana": 312, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674203393, "client": {"health": 7590, "mana": 311, "pips": 1}, "opponent": {"health": 455, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674203424, "client": {"health": 7590, "mana": 311, "pips": 1}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674203441, "client": {"health": 7590, "mana": 310, "pips": 2}, "opponent": {"health": 550, "pips": 2}},
+	{"round": 3, "time": 1674203467, "client": {"health": 7590, "mana": 309, "pips": 1}, "opponent": {"health": 485, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674203498, "client": {"health": 7590, "mana": 309, "pips": 1}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674203525, "client": {"health": 7590, "mana": 308, "pips": 2}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 3, "time": 1674203548, "client": {"health": 7590, "mana": 307, "pips": 1}, "opponent": {"health": 465, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674203579, "client": {"health": 7590, "mana": 307, "pips": 1}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674203614, "client": {"health": 7590, "mana": 306, "pips": 0}, "opponent": {"health": 455, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674203645, "client": {"health": 7590, "mana": 315, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674203672, "client": {"health": 7590, "mana": 314, "pips": 0}, "opponent": {"health": 445, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674203703, "client": {"health": 7590, "mana": 314, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674203725, "client": {"health": 7590, "mana": 313, "pips": 0}, "opponent": {"health": 465, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674203756, "client": {"health": 7590, "mana": 315, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674203777, "client": {"health": 7590, "mana": 314, "pips": 0}, "opponent": {"health": 475, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674203808, "client": {"health": 7590, "mana": 314, "pips": 1}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674203834, "client": {"health": 7590, "mana": 313, "pips": 1}, "opponent": {"health": 465, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674203864, "client": {"health": 7590, "mana": 315, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674203882, "client": {"health": 7590, "mana": 314, "pips": 0}, "opponent": {"health": 475, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674203913, "client": {"health": 7590, "mana": 314, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674203944, "client": {"health": 7590, "mana": 313, "pips": 0}, "opponent": {"health": 465, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674203975, "client": {"health": 7590, "mana": 315, "pips": 1}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674204006, "client": {"health": 7590, "mana": 314, "pips": 1}, "opponent": {"health": 445, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674204037, "client": {"health": 7590, "mana": 314, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674204062, "client": {"health": 7590, "mana": 313, "pips": 0}, "opponent": {"health": 485, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674204093, "client": {"health": 7590, "mana": 315, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674204122, "client": {"health": 7590, "mana": 314, "pips": 0}, "opponent": {"health": 475, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674204153, "client": {"health": 7590, "mana": 314, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674204179, "client": {"health": 7590, "mana": 313, "pips": 0}, "opponent": {"health": 485, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674204209, "client": {"health": 7590, "mana": 313, "pips": 1}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674204231, "client": {"health": 7590, "mana": 312, "pips": 1}, "opponent": {"health": 475, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674204261, "client": {"health": 7590, "mana": 312, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674204282, "client": {"health": 7590, "mana": 311, "pips": 0}, "opponent": {"health": 550, "pips": 2}},
+	{"round": 3, "time": 1674204309, "client": {"health": 7590, "mana": 310, "pips": 1}, "opponent": {"health": 475, "pips": 3}}
+],
+[
+	{"round": 1, "time": 1674204341, "client": {"health": 7590, "mana": 310, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674204368, "client": {"health": 7590, "mana": 309, "pips": 0}, "opponent": {"health": 465, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674204399, "client": {"health": 7590, "mana": 309, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674204416, "client": {"health": 7590, "mana": 308, "pips": 1}, "opponent": {"health": 550, "pips": 2}},
+	{"round": 3, "time": 1674204451, "client": {"health": 7590, "mana": 307, "pips": 1}, "opponent": {"health": 445, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674204481, "client": {"health": 7590, "mana": 315, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674204504, "client": {"health": 7590, "mana": 314, "pips": 0}, "opponent": {"health": 445, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674204534, "client": {"health": 7590, "mana": 314, "pips": 1}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674204561, "client": {"health": 7590, "mana": 313, "pips": 1}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 3, "time": 1674204583, "client": {"health": 7590, "mana": 312, "pips": 0}, "opponent": {"health": 445, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674204614, "client": {"health": 7590, "mana": 315, "pips": 1}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674204646, "client": {"health": 7590, "mana": 314, "pips": 1}, "opponent": {"health": 485, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674204676, "client": {"health": 7590, "mana": 314, "pips": 1}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674204706, "client": {"health": 7590, "mana": 313, "pips": 1}, "opponent": {"health": 475, "pips": 1}}
+],
+[
+	{"round": 1, "time": 1674204738, "client": {"health": 7590, "mana": 313, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674204763, "client": {"health": 7590, "mana": 312, "pips": 0}, "opponent": {"health": 485, "pips": 2}}
+],
+[
+	{"round": 1, "time": 1674204794, "client": {"health": 7590, "mana": 312, "pips": 0}, "opponent": {"health": 550, "pips": 1}},
+	{"round": 2, "time": 1674204815, "client": {"health": 7590, "mana": 311, "pips": 0}, "opponent": {"health": 445, "pips": 2}}
+],

@@ -1,0 +1,48 @@
+// Spell config example
+// (Alike many sim components) Spells are encoded in JSON format
+// This allows for easy interfacing with Python dictionaries and cross-platform support
+{
+	"spell"	: "Thunder Snake",
+	"rate" : 0.7,
+	"school" : 2,	// simtypes.School
+	"cost" : [
+		// simtypes.Pip enum
+
+		1,	// Basic (-1 for X pip spells)
+		0,	// Power (SHOULD ALWAYS BE ZERO)
+		0,	// Balance
+
+		0,	// Death
+		0,	// Fire
+		0,	// Ice
+
+		0,	// Life
+		0,	// Myth
+		0	// Storm
+	],
+	"scost" : 0,	// Shadow pip cost
+
+	// Spell actions (all applied sequentially in the game)
+	// simtypes.Action
+	"actions" : [
+		{
+			"type" : 4,		// simtypes.Action
+			"target" : 2, 	// simtypes.Target
+
+			// Type of data varies based off of spell type
+			// Charm, Ward, Aura, Global --> Modifier object (dict that follows structure seen in state config)
+			// Manipulate --> Dict with values for simtype.Status and int
+			// Damage, Heal, Lifesteal --> Dict of following structure
+			"data" : {
+				"school" : 2,	// simtypes.School
+				"range" : [105, 115, 125, 135, 145],
+				"distribution" : [0.2, 0.2, 0.2, 0.2, 0.2]		// TODO: If all spells are determined to be uniform, remove this field
+			},
+
+			// NOT YET IMPLEMENTED!
+			// Use this for a lot of the fancy gambit functionality seen in PVP spells
+			// ^^and insane bolt
+			"condition": null
+		}
+	]
+}

@@ -1,0 +1,15 @@
+# Rough example of spell config idea
+Name: Thunder Snake
+Class: Storm
+Rate: 70%
+Actions:
+	# Actions are ordered
+	# Ex. Calypso would first call 'Trap - All'
+	Damage - Target 	# Target can be array for spells like Iron Sultan
+		# Distributions ommitting chance will be assumed uniform
+		# Be sure to warn if distribution does not add up to 1
+		105 [0.2]
+		115 [0.2]
+		125 [0.2]
+		135 [0.2]
+		145 [0.2]
