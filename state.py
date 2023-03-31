@@ -3,9 +3,8 @@
 # Supports JSON-encoded I/O
 # Members can be initalized from file
 
-from json import load, loads
-from json.decoder import JSONDecodeError as JSONError
-from util import encodeJSON
+from util import encodeJSON, loadJSON
+from datatypes import Pip, Status
 
 # NOTE: For awhile I had been really committed to this idea of having defaults that wouldn't be stored
 #		if the value were unchanged. I liked this idea in hopes that it would save the memory usage
@@ -19,45 +18,28 @@ from util import encodeJSON
 
 # -- CORE STATE OBJECT --
 class State:
-	@classmethod
-	# Handle different input formats
-	# Ultimately returns a state dict
-	def parse(cls, data: str):
-		# First attempt to parse the string as a JSON-encoded dictionary
-		try: return loads(data)
-		except JSONError: pass
-
-		# Otherwise, attempt to open the path
-		try:
-			with open(data) as f:
-				return load(f)
-		
-		except (FileNotFoundError, JSONError):
-			raise ValueError
-	
-
 	# Argument: 'data' can be...
 	#   None for new state (with defaults)
 	#   JSON-encoded string with partial (or full) data
 	#   Filepath to JSON-encoded string
 	def __init__(self, data = None):
 		if isinstance(data, str):
-			try: data = State.parse(data)
-			except ValueError:
+			print("WARNING: Attempting to load state from unparsed string")
+			try: data = loadJSON(data)["state"]
+			except (ValueError, KeyError):
 				print("WARNING: State data could not be parsed from json string or path")
 		
 		# Init state primitives
 		self.round = getattr(data, "round", 1)		# NOTE: Pips should be acquired at the start of the player turn, if applicable
 		self.first = getattr(data, "first", 0)		# Should be either 0 or 4 (wizards first or npcs first)
 		self.player = getattr(data, "player", 0)	# Index of casting participant
+
+		# TODO: "Next player" should be parsed from order and a list of pending interrupts
 		self.order = getattr(data, "order", None)	# Array of member IDs to define cast order (should be: [None for x in range(8)])
 		if self.order is None: self.order = [None for x in range(8)]
 		
 		# Init state objects
-		self.bubble = None		# Active global (represented as Modifier obj)
-								# ^^Exception rule of "don't look up defaults" as this is a component of the sim calculations
-		if hasattr(data, "bubble"): bubble = Modifier(data["bubble"])
-
+		self.bubble = getattr(data, "bubble", None)		# Active global (represented as Modifier obj)
 		self.members = {}		# Dict of (member_id, member_data) : Allows >8 member states for battles that require it
 		for memberid, memberdata in getattr(data, "members", {}).items():
 			self.members[memberid] = Member(memberdata)
@@ -66,11 +48,94 @@ class State:
 		return encodeJSON(self)
 
 
-# -- MODIFIER (Charm, Ward, etc.) OBJECT --
-class Modifier:
-	# These will not have explicit files, so only dictionary types are parsed*
-	def __init__(self, data = None):
-		# Pull the values from the dictionary
-		pass
+# Modifer moved to datatypes.py
+# ^^spell should be specified in there as well
 
 # -- CORE MEMBER OBJECT --
+class Member:
+	# Atributes to parse from stats while loading:
+	#    Health, Mana, Deck (main and side and archmastery selection)
+	#    Everything else we can init to 'zero'
+	def __init__(self, data):
+		# assert isinstance(data, dict)		# Commented because data can be None if new member
+
+		# Init state primitives
+		self.health = getattr(data, "health", -1)
+		# self.mana = getattr(data, "mana", -1)		# TODO if using mana, consider specification for inifinite mana (PvP / Mob)
+
+		self.pips = getattr(data, "pips", None)
+		if self.pips is None: self.pips = [Pip.NONE for x in range(7)]
+		self.shads = getattr(data, "shads", 0)
+		self.shadprog = getattr(data, "shadprog", 0)	# Current progress towards the next shadow pip (float 0 <= prog < 1)
+
+		# Status is addressed by datatypes.Status
+		self.status = getattr(data, "status", [0, 0, 0])
+
+		# Reference to Modifier types within spell_id
+		self.aura = getattr(data, "aura", None)
+		self.charms = getattr(data, "charms", [])
+		self.wards = getattr(data, "wards", [])
+		self.tokens = []
+		tokens = getattr(data, "tokens", None)
+		if isinstance(tokens, list):							# TODO: Determine what stats should be tracked (such as pierce??)
+			for t in tokens: self.tokens.append((t[0], t[1]))	# Tokens are tuple of (Rounds remaining, damage)
+
+		# Deck is array of spell_ids, in the shuffled order
+		# The first seven cards are the client's hand, the latter are available to draw
+		# The shuffle should be randomized for every "battle" but consistent so that states at depth
+		#    can be accurately evaluated
+		# TODO: We may need some sort of way for reshuffle to keep the same seed??
+		#    ^^In retrospect, probably not as only one transition will be required for a given tree
+		#    Other trees are likely to differ as different spells may have been cast before a reshuffle
+		# TODO: Consider a system for the future AI agent that can weight based off of what might be drawn,
+		#    and not what is drawn. (If using this alongside a battle, for example)
+		#    An ML model can likely be trained without this consideration
+		# NOTE: Deck shuffling to be handlied 'as needed' via one iteration of fisher-yates
+		self.deck = getattr(data, "deck", None)		# If None, parse from member stats during initState()
+		self.side = getattr(data, "side", None)		# If None, parse from member stats during initState()
+
+		# Archmastery components
+		self.amschool = getattr(data, "amschool", Pip.NONE)		# The selected archmastery school (note that Pip.BASIC and Pip.POWER are invalid selections)
+		self.amprog = getattr(data, "amprog", 0)				# Progress toward next archmastery pip (float; > 1.0 means pip is stored as per the game mechanic)
+
+		# -- NOT IMPLEMENTED UNTIL MUCH LATER --
+		# Threat is the likelihood of an enemy to target the member
+		# Various actions in the battle (such as attacking or casting charms)
+		#    will change this value, but it does not actually impact any other portion
+		#    of the state beyond what the AI selects for the state transition
+		# TODO: Determine a value for this that would be accurate to the ingame system
+		#    is it random, does it limit ability to cast at all (like with pacify)?
+		self.threat = getattr(data, "threat", 0)
+
+	def __str__(self):
+		return encodeJSON(self)
+	
+	# Counting sort for player pips (makes consumption logic trivial)
+	def sortPips(self, length = 7):
+		assert len(self.pips) == length
+		counts = [0 for x in range(len(Pip.__members__))]		# Should be 10
+		for pip in self.pips: counts[pip.value] += 1
+
+		countIdx = 0
+		orderIdx = 0
+		while orderIdx < length:
+			if counts[countIdx] == 0: 
+				countIdx += 1
+				continue
+			self.pips[orderIdx] = Pip(countIdx)
+			orderIdx += 1
+			counts[countIdx] -= 1
+	
+	# Get the distribution of spells still in the deck
+	# Use this to predict what is more or less likely to be drawn (probably for AI agent)
+	# side -> Whether to use main deck or TCs
+	def spellDistribution(self, side = False):
+		dist = {}
+
+		deck = self.side if side else self.deck
+		for spell in deck:
+			count = getattr(dist, spell, 0)
+			dist[spell] = count + 1
+
+		# TODO: Consider alteration of the return type as necessary
+		return dist
