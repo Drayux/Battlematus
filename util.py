@@ -13,7 +13,7 @@ def encodeJSON(obj, omitNone = False):
 
 		# Primitives
 		case bool(): return str(obj).lower()
-		case str(): return '\"' + str + '\"'
+		case str(): return '\"' + obj + '\"'
 		case int(): return str(obj)
 		case None: return "null"
 

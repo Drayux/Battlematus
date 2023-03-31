@@ -143,68 +143,68 @@ class Target(IntEnum):
 # Holds static member data for reference by Simulation class
 class Stats:
 	# TODO: Consider system to parse stats from gear (likely a seperate tool to generate stat files)
-	def __init__(self, data):
+	def __init__(self, data = None):
+		if data is None: data = {}
+		assert isinstance(data, dict)
 		statRange = range(len(School.__members__))			# Length of arrays for school-specific stats
 
-		print(data)
-
 		# -- BASIC STATS --
-		self.level = getattr(data, "level", 1)				# Player level (significant thanks to crit rating 🙂)
-		self.health = getattr(data, "health", 500)			# Maximum health
-		self.mana = getattr(data, "mana", 10)				# Maximum mana
-		self.mastery = getattr(data, "mastery", None)		# School mastery (multiple masteries possible, hence array)
+		self.level = data.get("level", 1)			# Player level (significant thanks to crit rating 🙂)
+		self.health = data.get("health", 500)		# Maximum health
+		self.mana = data.get("mana", 10)			# Maximum mana
+		self.mastery = data.get("mastery")			# School mastery (multiple masteries possible, hence array)
 		if self.mastery is None: self.mastery = [False for x in statRange]
 
 		# -- PRIMARY STATS --
 		# NOTE: Some stats (like lunar damage) are implicit with global stats but not displayed in game!
 
 		# Tuples of (damage multiplier, flat damage bonus) per datatypes.School
-		damageRaw = getattr(data, "damage", None)
-		if damageRaw is not None:
-			for i, entry in enumerate(damageRaw):
-				self.damage[i] = (entry[0], entry[1])
-		else: self.damage = [(0, 0) for x in statRange]
+		# TODO: Consider assertion for damage array being intended length
+		damage = data.get("damage")
+		if damage is None: self.damage = [(0, 0) for x in statRange]
+		else: self.damage = [(x[0], x[1]) for x in damage]
 		
 		# Tuples of (resist multiplier, flat res) per datatypes.School
-		resistRaw = getattr(data, "resist", None)
-		if resistRaw is not None:
-			for i, entry in enumerate(resistRaw):
-				self.resist[i] = (entry[0], entry[1])
-		else: self.resist = [(0, 0) for x in statRange]
+		# TODO: Consider assertion for resist array being intended length
+		resist = data.get("resist")
+		if resist is None: self.resist = [(0, 0) for x in statRange]
+		else: self.resist = [(x[0], x[1]) for x in resist]
 		
-		self.accuracy = getattr(data, "accuracy", None)		# Spell cast accuracy bonus
+		self.accuracy = data.get("accuracy")		# Spell cast accuracy bonus
 		if self.accuracy is None: self.accuracy = [0 for x in statRange]
 
 		# -- SECONDARY STATS (page 1) --
-		self.critical = getattr(data, "critical", None)		# Critical hit rating
+		self.critical = data.get("critical")		# Critical hit rating
 		if self.critical is None: self.critical = [0 for x in statRange]
 
-		self.block = getattr(data, "block", None)			# Critical block rating
+		self.block = data.get("block")				# Critical block rating
 		if self.block is None: self.block = [0 for x in statRange]
 
-		self.pierce = getattr(data, "pierce", None)			# Armor piercing bonus
+		self.pierce = data.get("pierce")			# Armor piercing bonus
 		if self.pierce is None: self.pierce = [0 for x in statRange]
 
-		self.stunres = getattr(data, "stunres", 0)			# Stun resistance
+		self.stunres = data.get("stunres", 0)		# Stun resistance
 
-		healingRaw = getattr(data, "healing", [0, 0])
-		self.healing = (healingRaw[0], healingRaw[1])		# Healing I/O multiplier bonus
+		healing = data.get("healing", [0, 0])
+		self.healing = (healing[0], healing[1])		# Healing I/O multiplier bonus
 
 		# -- SECONDARY STATS (page 2) --
-		self.pipcons = getattr(data, "critical", None)		# Pip conversion rating
-		if self.critical is None: self.critical = [0 for x in statRange]
+		self.pipcons = data.get("pipcons")			# Pip conversion rating
+		if self.pipcons is None: self.pipcons = [0 for x in statRange]
 
-		self.powerpip = getattr(data, "powerpip", 0)		# Chance of obtaining a power pip
-		self.shadpip = getattr(data, "shadpip", 0)			# Shadow pip rating
-		self.archmastery = getattr(data, "archmastery", 0)	# Archmastery rating
+		self.powerpip = data.get("powerpip", 0)		# Chance of obtaining a power pip
+		self.shadpip = data.get("shadpip", 0)		# Shadow pip rating
+		self.archmastery = data.get("archmastery", 0)	# Archmastery rating
 
 		# -- TERTIARY STATS (not listed on profile) --
-		self.startpips = getattr(data, "startpips", [])		# Bonus starting pips (array to support basic or power)
-		self.maycasts = getattr(data, "maycasts", [])		# Pet maycast cheat IDs (TODO: Add pet happiness casts)
+		self.startpips = data.get("startpips", [])	# Bonus starting pips (array to support basic or power)
+		self.maycasts = data.get("maycasts", [])	# Pet maycast cheat IDs (TODO: Add pet happiness casts)
 
-		self.amschool = getattr(data, "amschool", Pip.FIRE) # Initial deck archmastery selection
-		self.deck = getattr(data, "deck", [])				# Starting deck (important for battle init and reshuffle)
-		self.side = getattr(data, "side", [])				# Treasure cards deck
+		self.deck = data.get("deck", [])			# Starting deck (important for battle init and reshuffle)
+		self.side = data.get("side", [])			# Treasure cards deck
+
+		# Initial deck archmastery selection
+		self.amschool = Pip(data.get("amschool", Pip.FIRE.value)) 
 
 
 # -- MODIFIER (Charm, Ward, etc.) OBJECT --

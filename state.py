@@ -23,25 +23,27 @@ class State:
 	#   JSON-encoded string with partial (or full) data
 	#   Filepath to JSON-encoded string
 	def __init__(self, data = None):
+		if data is None: data = {}
 		if isinstance(data, str):
 			print("WARNING: Attempting to load state from unparsed string")
 			try: data = loadJSON(data)["state"]
 			except (ValueError, KeyError):
 				print("WARNING: State data could not be parsed from json string or path")
+		assert isinstance(data, dict)
 		
 		# Init state primitives
-		self.round = getattr(data, "round", 1)		# NOTE: Pips should be acquired at the start of the player turn, if applicable
-		self.first = getattr(data, "first", 0)		# Should be either 0 or 4 (wizards first or npcs first)
-		self.player = getattr(data, "player", 0)	# Index of casting participant
+		self.round = data.get("round", 1)		# NOTE: Pips should be acquired at the start of the player turn, if applicable
+		self.first = data.get("first", 0)		# Should be either 0 or 4 (wizards first or npcs first)
+		self.player = data.get("player", 0)		# Index of casting participant
 
 		# TODO: "Next player" should be parsed from order and a list of pending interrupts
-		self.order = getattr(data, "order", None)	# Array of member IDs to define cast order (should be: [None for x in range(8)])
+		self.order = data.get("order")			# Array of member IDs to define cast order (should be: [None for x in range(8)])
 		if self.order is None: self.order = [None for x in range(8)]
 		
 		# Init state objects
-		self.bubble = getattr(data, "bubble", None)		# Active global (represented as Modifier obj)
+		self.bubble = data.get("bubble")		# Active global (represented as ref to Modifier via spellID)
 		self.members = {}		# Dict of (member_id, member_data) : Allows >8 member states for battles that require it
-		for memberid, memberdata in getattr(data, "members", {}).items():
+		for memberid, memberdata in data.get("members", {}).items():
 			self.members[memberid] = Member(memberdata)
 	
 	def __str__(self):
@@ -56,27 +58,34 @@ class Member:
 	# Atributes to parse from stats while loading:
 	#    Health, Mana, Deck (main and side and archmastery selection)
 	#    Everything else we can init to 'zero'
-	def __init__(self, data):
-		# assert isinstance(data, dict)		# Commented because data can be None if new member
+	def __init__(self, data = None):
+		if data is None: data = {}
+		assert isinstance(data, dict)
 
 		# Init state primitives
-		self.health = getattr(data, "health", -1)
+		self.health = data.get("health", -1)
 		# self.mana = getattr(data, "mana", -1)		# TODO if using mana, consider specification for inifinite mana (PvP / Mob)
 
-		self.pips = getattr(data, "pips", None)
-		if self.pips is None: self.pips = [Pip.NONE for x in range(7)]
-		self.shads = getattr(data, "shads", 0)
-		self.shadprog = getattr(data, "shadprog", 0)	# Current progress towards the next shadow pip (float 0 <= prog < 1)
+		# Pips are enum type, so cast the value from the raw data
+		pips = data.get("pips")
+		if pips is None: self.pips = [Pip.NONE for x in range(7)]
+		else:
+			assert len(pips) == 7
+			self.pips = [Pip(x) for x in pips]
+
+		self.shads = data.get("shads", 0)
+		self.shadprog = data.get("shadprog", 0)		# Current progress towards the next shadow pip (float 0 <= prog < 1)
 
 		# Status is addressed by datatypes.Status
-		self.status = getattr(data, "status", [0, 0, 0])
+		self.status = data.get("status", [0, 0, 0])
 
 		# Reference to Modifier types within spell_id
-		self.aura = getattr(data, "aura", None)
-		self.charms = getattr(data, "charms", [])
-		self.wards = getattr(data, "wards", [])
+		self.aura = data.get("aura")
+		self.charms = data.get("charms", [])
+		self.wards = data.get("wards", [])
+
 		self.tokens = []
-		tokens = getattr(data, "tokens", None)
+		tokens = data.get("tokens")
 		if isinstance(tokens, list):							# TODO: Determine what stats should be tracked (such as pierce??)
 			for t in tokens: self.tokens.append((t[0], t[1]))	# Tokens are tuple of (Rounds remaining, damage)
 
@@ -91,12 +100,12 @@ class Member:
 		#    and not what is drawn. (If using this alongside a battle, for example)
 		#    An ML model can likely be trained without this consideration
 		# NOTE: Deck shuffling to be handlied 'as needed' via one iteration of fisher-yates
-		self.deck = getattr(data, "deck", None)		# If None, parse from member stats during initState()
-		self.side = getattr(data, "side", None)		# If None, parse from member stats during initState()
+		self.deck = data.get("deck")		# If None, parse from member stats during initState()
+		self.side = data.get("side")		# If None, parse from member stats during initState()
 
 		# Archmastery components
-		self.amschool = getattr(data, "amschool", Pip.NONE)		# The selected archmastery school (note that Pip.BASIC and Pip.POWER are invalid selections)
-		self.amprog = getattr(data, "amprog", 0)				# Progress toward next archmastery pip (float; > 1.0 means pip is stored as per the game mechanic)
+		self.amschool = Pip(data.get("amschool", Pip.NONE.value))	# The selected archmastery school (note that Pip.BASIC and Pip.POWER are invalid selections)
+		self.amprog = data.get("amprog", 0)							# Progress toward next archmastery pip (float; > 1.0 means pip is stored as per the game mechanic)
 
 		# -- NOT IMPLEMENTED UNTIL MUCH LATER --
 		# Threat is the likelihood of an enemy to target the member
@@ -105,7 +114,7 @@ class Member:
 		#    of the state beyond what the AI selects for the state transition
 		# TODO: Determine a value for this that would be accurate to the ingame system
 		#    is it random, does it limit ability to cast at all (like with pacify)?
-		self.threat = getattr(data, "threat", 0)
+		self.threat = data.get("threat", 0)
 
 	def __str__(self):
 		return encodeJSON(self)

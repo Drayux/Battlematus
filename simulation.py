@@ -53,13 +53,14 @@ class Simulation:
 		self.pvp = False	# Alternative damage calculations and round handling for pvp
 		self.cheats = {}	# Dict of <types.cheat>
 
-		if isinstance(path, str): self.loadData(path)
+		if isinstance(path, str): self.load(path)
 		else: self.state = State()
 
 	# Load the simulation data from a file
 	# TODO CREATE DIRECTORY AND FILETYPE ASSUMPTION
-	def loadData(self, path):
+	def load(self, path):
 		data = None
+		print("path:", path)
 		try: data = loadJSON(path)
 		except ValueError:
 			print("WARNING: Simulation data could not be parsed from json string or path")
@@ -68,13 +69,13 @@ class Simulation:
 		# Initialize the state
 		self.state = State(data["state"])
 		for mID, mState in self.state.members.items():
-			loadStats(mID, mState)
+			self.loadStats(mID, mState)
 	
 	# Saves state data alongside other important data, like the member list and cheats
 	# Members and cheats can be loaded individually (useful with GUI mode) or all at once
 	#   from file (useful with model training applications)
 	# TODO CREATE DIRECTORY AND FILETYPE ASSUMPTION
-	def saveData(self, path):
+	def save(self, path):
 		# Define the output file structure
 		# loads(dumps(state)) is a bit weird, but an easy way to convert our class to a dict using our method
 		# ^^We don't want to save all of the attributes of the simulation class

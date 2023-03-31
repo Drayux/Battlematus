@@ -1,0 +1,23 @@
+{
+	"state": {
+		"round": 6,
+		"first": 4,
+		"player": 4,
+		"order": [
+			"player.bobsparklepants",
+			"mob.dragonspyre.zarathax",
+			null,
+			null,
+			null,
+			null,
+			null,
+			null
+		],
+		"bubble": null,
+		"members": {
+			"player.bobsparklepants": {
+				"health": 420
+			}
+		}
+	}
+}
