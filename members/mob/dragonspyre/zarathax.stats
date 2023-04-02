@@ -1,0 +1,67 @@
+{
+	"level": 35,
+	"health": 2800,
+	"mana": -1,
+	"mastery": [
+		false,
+		false,
+		false,
+		false,
+		false,
+		false,
+		true,
+		false,
+		false,
+		false,
+		false
+	],
+	"resist": [
+		[
+			0,
+			0
+		],
+		[
+			0,
+			0
+		],
+		[
+			0,
+			0
+		],
+		[
+			-0.16,
+			0
+		],
+		[
+			-0.16,
+			0
+		],
+		[
+			-0.16,
+			0
+		],
+		[
+			0.8,
+			0
+		],
+		[
+			0,
+			0
+		],
+		[
+			0,
+			0
+		],
+		[
+			0,
+			0
+		],
+		[
+			0,
+			0
+		]
+	],
+	"stunres": 0,
+	"startpips": [],
+	"deck": ["balance.elementalshield", "balance.spiritshield", "balance.weakness", "balance.balanceblade", "balance.hex", "balance.scarab", "balance.scorpion", "balance.locustswarm", "balance.sandstorm", "balance.judgement", "ice.evilsnowman", "death.vampire"]
+}

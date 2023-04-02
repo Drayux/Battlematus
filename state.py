@@ -143,7 +143,7 @@ class Member:
 
 		deck = self.side if side else self.deck
 		for spell in deck:
-			count = getattr(dist, spell, 0)
+			count = dist.get(spell, 0)
 			dist[spell] = count + 1
 
 		# TODO: Consider alteration of the return type as necessary

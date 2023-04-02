@@ -26,18 +26,18 @@ class Position(IntEnum):
 # These are specific to stochastic elements (many phases have important sub components)
 # DeltaTree should consider only the phases: 2, 3, 4, 6, 8, and 9 ( 0 PENDING )
 class Phase(IntEnum):
-	PLANNING = 0	# Handle pip gain and card draw (if member has deck ; also enchants)
-	TOKEN = 1		# "Pre-round" handle DOT / HOT 'tokens'
-	CAST = 2		# Handle cast success and target (if stun, beguile, etc ; also consumes accuracy charms)
-	CRITICAL = 3	# If spell can change health values, it can hit critical
-	# --- 4, 5, 6, 7, 8 : all repeatable (in sequence) ---
-	ACTION = 4		# Any spell action with random chance (i.e. damage distribution, charm RNG)
-	OUTGOING = 5	# Consume charms and factor crit multiplier, global, caster aura, etc
-	BLOCK = 6		# If spell was a critical cast, it might be blocked
-	INCOMING = 7	# Consume target wards and factor pierce, block multipler, target aura, etc
-	EFFECT = 8		# Apply spell effects (such as DOTs, stuns, pip changes to target, etc)
-	# ----------------------------------------------------
-	PIPS = 9		# Handle pip changes (includes cost of spell, whether it was dispelled, pip conserve chance)
+	PIPS = 0		# Handle pip changes
+	PLANNING = 1	# Hand manipulation (enchants, discards, and TC draws)
+	TOKEN = 2		# "Pre-round" handle DOT / HOT 'tokens'
+	CAST = 3		# Handle cast success and target (if stun, beguile, etc ; also consumes accuracy charms ; update pip count)
+	CRITICAL = 4	# If spell can change health values, it can hit critical
+	# --- 5 -> 9 : all repeatable (in sequence) ---
+	ACTION = 5		# Any spell action with random chance (i.e. damage distribution, charm RNG)
+	OUTGOING = 6	# Consume charms and factor crit multiplier, global, caster aura, etc
+	BLOCK = 7		# If spell was a critical cast, it might be blocked
+	INCOMING = 8	# Consume target wards and factor pierce, block multipler, target aura, etc
+	EFFECT = 9		# Apply spell effects (such as DOTs, stuns, pip changes to target, etc)
+	# ---------------------------------------------
 	INTERRUPT = -1	# Boss cheats or pet maycasts
 	#				^^It ocurred to me that interrupts happen as "turns" not within a given turn
 
@@ -143,10 +143,12 @@ class Target(IntEnum):
 # Holds static member data for reference by Simulation class
 class Stats:
 	# TODO: Consider system to parse stats from gear (likely a seperate tool to generate stat files)
+	# NOTE: For level, if the stats describe a mob, then each rank counts for 5 levels: Basic, Advanced, Elite, (unused), Boss
+	# 		^^Take rank * 5 for level of boss, subtract as necessary (R7B = 5 * 7 = 35)
 	def __init__(self, data = None):
 		if data is None: data = {}
 		assert isinstance(data, dict)
-		statRange = range(len(School.__members__))			# Length of arrays for school-specific stats
+		statRange = range(len(School.__members__))	# Length of arrays for school-specific stats
 
 		# -- BASIC STATS --
 		self.level = data.get("level", 1)			# Player level (significant thanks to crit rating 🙂)
@@ -205,6 +207,10 @@ class Stats:
 
 		# Initial deck archmastery selection
 		self.amschool = Pip(data.get("amschool", Pip.FIRE.value)) 
+
+		# -- MISCELLANEOUS --
+		# Is the member a player or npc (can by implied by mana value, but good to have an explicit value)
+		self.player = data.get("player", self.mana < 0)
 
 
 # -- MODIFIER (Charm, Ward, etc.) OBJECT --

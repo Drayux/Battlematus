@@ -149,11 +149,6 @@ class Simulation:
 
 	# --- CORE SIMULATION OPERATION ---
 
-	# Update state with "start of round" components (i.e. everything in Phase.PLANNING)
-	# Return vector of available spell choices (TODO decide whether list should be )
-	def prepare(self):
-		pass
-
 	# Primary simulation operation
 	# Takes the current state and calculates a distribution of all possible child states
 	def process(self):

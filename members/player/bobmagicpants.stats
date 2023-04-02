@@ -17,7 +17,7 @@
 	],
 	"damage": [
 		[
-			50,
+			0.5,
 			0
 		],
 		[
@@ -63,7 +63,7 @@
 	],
 	"resist": [
 		[
-			25,
+			0.25,
 			0
 		],
 		[
@@ -170,6 +170,6 @@
 	"archmastery": 0,
 	"startpips": [],
 	"maycasts": [],
-	"deck": [],
+	"deck": ["fire.firecat", "ice.frostbeetle", "life.imp", "fire.fireelf", "fire.sunbird", "fire.firetrap", "fire.helephant"],
 	"side": []
 }
