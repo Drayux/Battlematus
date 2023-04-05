@@ -32,13 +32,15 @@ class State:
 		assert isinstance(data, dict)
 		
 		# Init state primitives
-		self.round = data.get("round", 1)		# NOTE: Pips should be acquired at the start of the player turn, if applicable
-		self.first = data.get("first", 0)		# Should be either 0 or 4 (wizards first or npcs first)
-		self.player = data.get("player", 0)		# Index of casting participant
+		self.round = data.get("round", 0)		# NOTE: Pips should be acquired at the start of the player turn, if applicable
+		self.first = data.get("first", 0)		# Should be either 0 or 4 (players or npcs first)
+		# self.player = data.get("player", 0)		# Index of casting participant
+		self.turns = data.get("turns", [])		# List of pending turns for the round
 
 		# TODO: "Next player" should be parsed from order and a list of pending interrupts
-		self.order = data.get("order")			# Array of member IDs to define cast order (should be: [None for x in range(8)])
-		if self.order is None: self.order = [None for x in range(8)]
+		self.position = data.get("position")	# Array of member IDs to define cast order
+		if self.position is None: self.position = [None for x in range(8)]
+		self.interrupts = data.get("interrupts", [])	# List of 
 		
 		# Init state objects
 		self.bubble = data.get("bubble")		# Active global (represented as ref to Modifier via spellID)
@@ -83,6 +85,7 @@ class Member:
 		self.aura = data.get("aura")
 		self.charms = data.get("charms", [])
 		self.wards = data.get("wards", [])
+		# TODO: Consider adding stun blocks to their own list! (I don't think they count as wards)
 
 		self.tokens = []
 		tokens = data.get("tokens")

@@ -38,8 +38,7 @@ class Phase(IntEnum):
 	INCOMING = 8	# Consume target wards and factor pierce, block multipler, target aura, etc
 	EFFECT = 9		# Apply spell effects (such as DOTs, stuns, pip changes to target, etc)
 	# ---------------------------------------------
-	INTERRUPT = -1	# Boss cheats or pet maycasts
-	#				^^It ocurred to me that interrupts happen as "turns" not within a given turn
+	ROUND = -1		# Round update mechanics (like incrementing the round number)
 
 
 # -- MEMBER STATS --
@@ -93,6 +92,18 @@ class Status(IntEnum):
 	CONFUSED = 2
 
 
+# Enum for the various types of manipulation a Delta type can perform to an attribute
+class DeltaType(IntEnum):
+	NONE = 0	# Take no action (for debugging purposes)
+	RESET = 1   # Reset the attribute to the default value (needs some form of config to determine default value)
+	ADD = 2		# Append something to a list (like a new blade or shield) / Apply a flat value (like flat damage)
+	REMOVE = 3	# Remove an item from a list
+	MULT = 4	# Apply a multiplier to a numerical value
+	MIN = 5		# Apply a min(a, b) function to a numerical value
+	MAX = 6		# Apply a max(a, b) function to a numerical value
+	PIP = 7		# Apply a pip manipulation function
+
+
 # -- SPELL REPRESENTATION --
 
 # Enum for modification object types
@@ -106,6 +117,7 @@ class ModType(IntEnum):
 	HEALING_CAP = 5
 	ABSORB = 6
 	RESIST_MOD = 7
+	MARK = 8			# For "stun blocks" that are nonfunctional and only an element of a boss' cheat
 	# Critical chance
 	# pierce
 	# pip chance

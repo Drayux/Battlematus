@@ -151,20 +151,96 @@ class Simulation:
 
 	# Primary simulation operation
 	# Takes the current state and calculates a distribution of all possible child states
+	# ^^Iteration size is *one* member turn
 	def process(self):
-		# Array of (state, chance) tuples to represent the outcome distribution
-		output = []
+		output = DeltaTree(self.state)
 
-		# Check for start of round components
-		if (self.state.player == self.state.first):
-			pass	# Need to duplicate a state above
+		# Phase 0 : Update pips
+		# TODO
 
-	# ---------------------------------
+	# Simulate one player round via means of random selection, and update the state immediately
+	# This function exists mostly for the sake of debugging, and determining the structure for the deltatree
+	# selection --> tuple (or array of tuples) for spell selection (spell idx, target idx)
+	#    ^^if enchant, array of tuples should be used; target idx becomes index of spell (assuming enchant is not yet consumed)
+	def simulate(self, selection = None, seed = None):
+		# TODO: Implement seed mechanic
 
-	# Dummy utility (API) function ideas for future reference
-	# def getMemberPosition(self, memberID): pass
-	# def getMemberState(self, position, memberID): pass
-	def getCastingMember(self): pass
+		# -- Update round components --
+		# 	determine next player
+		# 	determine if battle is won
+		# 	determine round start condition
+		# 	If round start, kill off the dead npcs
+		if len(self.state.turns) == 0: self.updateRound()
+
+		idx = self.state.turns.pop(0)
+		caster = self.state.position[idx]
+
+	# Called when a new round is started (useful for handling cheats)
+	# Everything in this function should happen independent of Delta parsing
+	#    ^^I.E. this is the cleanup routine after actions were taken
+	# Returns negative if 'player' victory; 0 if battle is still going; positive if 'NPC' victory
+	def updateRound(self):
+		self.state.round += 1
+
+		# Generate the turns
+		posLen = len(self.state.position)
+		base = self.state.first
+		dead = 0
+		for x in range(posLen):
+			idx = (base + x) % posLen
+			# if idx % 4 == 0: dead = 0
+
+			caster = self.state.position[idx]
+			if caster is None:
+				# dead += 1
+				# if dead >= 4: return -1 if idx <= 3 else 1
+				continue
+
+			# Remove the NPC if 'defeated'
+			if self.state.members[caster].health <= 0:
+				# Human players remain in the battle
+				if not self.stats[caster].player:
+					self.state.position[idx] = None
+				continue
+
+			# TODO: Move end condition check down here
+
+			self.state.turns.append(idx)
+
+		# TODO: Handle cheats (ex: belloq's start of round cheat)
+
+	# def getNextCast
+
+	# Determine if combat is over
+	# Returns negative if 'player' victory; 0 if battle is still going; positive if 'NPC' victory
+	# UPDATES state.player
+	# TODO: Refactor to split nextCaster() mechanic and win condition
+	def getNextCasterOLD(self, length = 8):
+		state = self.state		# Reference for clarity
+		if length < 0: length = len(state.position)
+
+		dead = 0				# Number of 'dead' players per side
+		x = state.player
+		for i in range(1, length):
+			idx = (x + i) % length
+			player = state.order[idx]
+			if player is None:
+				dead += 1
+				
+			# Wizard's engine finishes all casts per 'side' even if battle was already won
+			else:
+				state.player = idx
+				return 0
+			
+			# Check dead counter
+			if dead >= 4: return -1 if x <= 3 else 1
+			elif i % 4 == 3: dead = 0
+		
+		print("WARNING: battleWon() did not return in the loop!")
+		return 0
+
+	def battleWon(self):
+		# If the next caster is on the same team as te
 
 
 # Helper class for the DeltaTree
@@ -194,6 +270,13 @@ class Node:
 		self.children.append((node, chance))
 
 
+# Class that represents a change to a state
+# type -> datatypes.DeltaType representing the modification to the attribute
+# attr -> Attribute to be modified
+# data -> The value relevant to the specified change
+# class Delta:
+# 	def __init__(self, type, attr, data): pass
+
 # Class to represent a 'state delta tree'
 # This is the return type of a state progression evaluation
 # Contains a copy of the original state before the conversion
@@ -210,7 +293,7 @@ class Node:
 class DeltaTree:
 	def __init__(self, state):
 		assert isinstance(state, State)
-		self.state = state.copy()		# TODO needs deepcopy or helper function
+		self.state = state		# TODO needs deepcopy or helper function (leaning to copying upon apply())
 		self.root = Node(None)
 	
 	def select(self, gen = None):
