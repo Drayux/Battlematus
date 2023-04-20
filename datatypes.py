@@ -30,7 +30,7 @@ class Phase(IntEnum):
 	PLANNING = 1	# Hand manipulation (enchants, discards, and TC draws)
 	TOKEN = 2		# "Pre-round" handle DOT / HOT 'tokens'
 	CAST = 3		# Handle cast success and target (if stun, beguile, etc ; also consumes accuracy charms ; update pip count)
-	CRITICAL = 4	# If spell can change health values, it can hit critical
+	# CRITICAL = 4	# If spell can change health values, it can hit critical
 	# --- 5 -> 9 : all repeatable (in sequence) ---
 	ACTION = 5		# Any spell action with random chance (i.e. damage distribution, charm RNG)
 	OUTGOING = 6	# Consume charms and factor crit multiplier, global, caster aura, etc
@@ -69,6 +69,15 @@ class Healing(IntEnum):
 
 # -- BATTLE STATE --
 
+# Cast event types
+class EventType(IntEnum):
+	PLAN = -1		# Associated member should be presented the planning phase
+	PASS = 0		# Member has selected pass
+	CAST = 1		# Member will cast a spell like normal
+	PET = 2			# Member's pet will cast a spell
+	INTERRUPT = 3	# Boss performs an interrupt (Member should be none if the cast does not technically occur from the boss, pet maycasts also count here)
+	EFFECT = 4		# Secondary spell effect like nightbringer (or possibly Guardian Angel TODO)
+
 # Simple enum for pips
 # School pip sorting order: balance, death, fire, ice, life, myth, storm
 class Pip(IntEnum):
@@ -82,6 +91,19 @@ class Pip(IntEnum):
 	DEATH = 3
 	MYTH = 7
 	BALANCE = 2
+
+	def __str__(self):
+		match self.value:
+			case 0: return "\033[38;5;15m⏺\033[0m"
+			case 1: return "\033[38;5;3m⏺\033[0m"
+			case 2: return "\033[38;5;52m⏺\033[0m"
+			case 3: return "\033[38;5;237m⏺\033[0m"
+			case 4: return "\033[38;5;202m⏺\033[0m"
+			case 5: return "\033[38;5;87m⏺\033[0m"
+			case 6: return "\033[38;5;41m⏺\033[0m"
+			case 7: return "\033[38;5;229m⏺\033[0m"
+			case 8: return "\033[38;5;129m⏺\033[0m"
+			case other: return ""
 
 
 # Enum for battle status (stunned, beguiled, confused)
@@ -161,6 +183,8 @@ class Stats:
 		if data is None: data = {}
 		assert isinstance(data, dict)
 		statRange = range(len(School.__members__))	# Length of arrays for school-specific stats
+
+		self.name = data.get("name", "Magic Man")	# 'Pretty' name for UI
 
 		# -- BASIC STATS --
 		self.level = data.get("level", 1)			# Player level (significant thanks to crit rating 🙂)

@@ -3,8 +3,8 @@
 		"round": 6,
 		"first": 4,
 		"player": 4,
-		"order": [
-			"player.bobsparklepants",
+		"position": [
+			"player.bobmagicpants",
 			null,
 			null,
 			null,
@@ -15,7 +15,7 @@
 		],
 		"bubble": null,
 		"members": {
-			"player.bobsparklepants": {
+			"player.bobmagicpants": {
 				"health": 420
 			}
 		}

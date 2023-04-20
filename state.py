@@ -3,8 +3,10 @@
 # Supports JSON-encoded I/O
 # Members can be initalized from file
 
+from collections import deque
+
 from util import encodeJSON, loadJSON
-from datatypes import Pip, Status
+from datatypes import Pip, Status, EventType
 
 # NOTE: For awhile I had been really committed to this idea of having defaults that wouldn't be stored
 #		if the value were unchanged. I liked this idea in hopes that it would save the memory usage
@@ -34,13 +36,17 @@ class State:
 		# Init state primitives
 		self.round = data.get("round", 0)		# NOTE: Pips should be acquired at the start of the player turn, if applicable
 		self.first = data.get("first", 0)		# Should be either 0 or 4 (players or npcs first)
-		# self.player = data.get("player", 0)		# Index of casting participant
-		self.turns = data.get("turns", [])		# List of pending turns for the round
 
-		# TODO: "Next player" should be parsed from order and a list of pending interrupts
+		# TODO: Handle pet maycasts (from member stats)
+		self.eventidx = data.get("eventidx", 0)
+		self.events = []					# List of pending "cast events" for the round
+		for event in data.get("events", []):
+			self.events.append(Event(event))
+
+		# NOTE: Each member must have a unique member ID
 		self.position = data.get("position")	# Array of member IDs to define cast order
 		if self.position is None: self.position = [None for x in range(8)]
-		self.interrupts = data.get("interrupts", [])	# List of 
+		# self.interrupts = data.get("interrupts", [])	# List of 
 		
 		# Init state objects
 		self.bubble = data.get("bubble")		# Active global (represented as ref to Modifier via spellID)
@@ -51,14 +57,25 @@ class State:
 	def __str__(self):
 		return encodeJSON(self)
 
+	# Gets the next event from the state (updates relevant fields)
+	# Returns None if end of round
+	def getEvent(self):
+		# Always points to the "upcoming event"
+		# AKA we insert interrupt events at this index and do not change the index
+		if self.eventidx == len(self.events): return None
+		event = self.events[self.eventidx]
+		self.eventidx += 1
 
-# Modifer moved to datatypes.py
-# ^^spell should be specified in there as well
+		# Skip events meant for following rounds
+		if event.delay == 0: return event
+		return self.getEvent()
+
 
 # -- CORE MEMBER OBJECT --
 class Member:
 	# Atributes to parse from stats while loading:
 	#    Health, Mana, Deck (main and side and archmastery selection)
+	#	 Anything that can be a bonus, such as pips
 	#    Everything else we can init to 'zero'
 	def __init__(self, data = None):
 		if data is None: data = {}
@@ -69,11 +86,11 @@ class Member:
 		# self.mana = getattr(data, "mana", -1)		# TODO if using mana, consider specification for inifinite mana (PvP / Mob)
 
 		# Pips are enum type, so cast the value from the raw data
-		pips = data.get("pips")
-		if pips is None: self.pips = [Pip.NONE for x in range(7)]
-		else:
-			assert len(pips) == 7
-			self.pips = [Pip(x) for x in pips]
+		pipsarr = [Pip(p) for p in data.get("pips", [])]
+		if len(pipsarr) > 0:
+			self.pips = [Pip.NONE for x in range(7)]
+			self.gainPips(pipsarr)
+		else: self.pips = None
 
 		self.shads = data.get("shads", 0)
 		self.shadprog = data.get("shadprog", 0)		# Current progress towards the next shadow pip (float 0 <= prog < 1)
@@ -83,11 +100,10 @@ class Member:
 
 		# Reference to Modifier types within spell_id
 		self.aura = data.get("aura")
-		self.charms = data.get("charms", [])
-		self.wards = data.get("wards", [])
-		# TODO: Consider adding stun blocks to their own list! (I don't think they count as wards)
-
-		self.tokens = []
+		self.charms = deque(data.get("charms", []))
+		self.wards = deque(data.get("wards", []))
+		
+		self.tokens = deque()
 		tokens = data.get("tokens")
 		if isinstance(tokens, list):							# TODO: Determine what stats should be tracked (such as pierce??)
 			for t in tokens: self.tokens.append((t[0], t[1]))	# Tokens are tuple of (Rounds remaining, damage)
@@ -119,9 +135,34 @@ class Member:
 		#    is it random, does it limit ability to cast at all (like with pacify)?
 		self.threat = data.get("threat", 0)
 
+		# Should the target be ressurected (base spell is 20%, so this would be 0.2)
+		self.ressurection = data.get("ressurection", 0)
+
 	def __str__(self):
 		return encodeJSON(self)
 	
+	# Give the member new pips
+	# NOTE: Assume array already sorted!
+	# NOTE: Pips should only be via this method
+	def gainPips(self, piparr):
+		# Determine current pip count
+		count = 0
+		noobIdx = -1	# If a noob pip was found, save the index here
+		for i, p in enumerate(self.pips):
+			if p == Pip.NONE:
+				count = i
+				break
+		
+		for i, p in enumerate(piparr):
+			idx = i + count
+			if idx >= 7: 
+				# TODO: Attempt to convert noob pip to power pip
+				print("TODO: [state.py] gainPips(): pip conversion upon overflow")
+				break
+			self.pips[idx] = p
+		
+		self.sortPips()
+
 	# Counting sort for player pips (makes consumption logic trivial)
 	def sortPips(self, length = 7):
 		assert len(self.pips) == length
@@ -138,6 +179,25 @@ class Member:
 			orderIdx += 1
 			counts[countIdx] -= 1
 	
+	# Utility function for "counting" pips
+	# Returns casting potential (with mastery, without mastery)
+	def countPips(self):
+		mastery = 0
+		nonmastery = 0
+
+		for p in self.pips:
+			match p:
+				case 9: break 
+				case 0: 
+					mastery += 1
+					nonmastery += 1
+				case other: 
+					# total += (2 if mastery else 1)
+					mastery += 2
+					nonmastery += 1
+
+		return (mastery, nonmastery)
+
 	# Get the distribution of spells still in the deck
 	# Use this to predict what is more or less likely to be drawn (probably for AI agent)
 	# side -> Whether to use main deck or TCs
@@ -151,3 +211,47 @@ class Member:
 
 		# TODO: Consider alteration of the return type as necessary
 		return dist
+
+
+# -- CAST EVENT OBJECT --
+# TODO: Adjust for new structure
+class Event:
+	# Structure to manage cast events
+	# Contents of data override other params
+	def __init__(self, member = None, data = None):
+		if data is None: data = {}
+
+		self.type = data.get("type", EventType.PLAN)
+		self.delay = data.get("delay", 0)
+		self.member = data.get("member", member)
+		self.spell = data.get("spell", None)
+
+		# How the event should be ordered if carried across rounds
+		# I really hate this implementation but I cannot think of anything that I like better
+		# Extra event order possibilities: Start/end of round, start/end of turn, or interrupt
+		self.local = data.get("local", True)		# Event happens before / after cast (alternatively the entire round)
+		self.before = data.get("before", True)		# Event happens before local / global
+
+		# NOTE: Event ordering refactor (for some point in the future)
+
+		# I should be able to construct the event queue and then sort the events
+		# So, each event needs some sort of value upon which to sort...
+		# Fortunately, we know the order at creation, so this is obtainable.
+
+		# Each value will be two parts: First is the index of the member the event is associated with
+		# (as we cannot sort by the memberID itself without checking the position of each member: the
+		# order is stored via the location in state.position)
+		# And the second part, being the time relative to the member's turn
+
+		# Each member turn should consist of at most one "CAST" event--this is time zero.
+		# This value can be inferred for any situation I imagine possible (cheats we just know via
+		# the cheat scripting, and nightbringer can be assumed to be -1, etc.)
+		# Round events are before or after all members, so we use either -1 or some big number like 999
+
+		# Finally, we have the process necessary to verify cross-round events:
+		# Each time one of these events is about to be inserted, we must verify that the positions
+		# array holds the member ID relevant to the event. (I.E. if our first ordering component is
+		# 2, then we verify state.position[2] == self.member) else we throw out the event
+	
+	def __str__(self):
+		return encodeJSON(self)

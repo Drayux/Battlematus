@@ -1,4 +1,5 @@
 {
+	"name": "Bob Magicpants",
 	"level": 10,
 	"health": 800,
 	"mana": 50,
@@ -165,7 +166,7 @@
 		0
 	],
 	"pipcons": null,
-	"powerpip": 0,
+	"powerpip": 0.6,
 	"shadpip": 0,
 	"archmastery": 0,
 	"startpips": [],

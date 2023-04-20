@@ -1,15 +1,22 @@
 # Utility functions for handling data I/O and API logic
 
+from collections import deque
 from enum import IntEnum
 
 from json import load, loads
 from json.decoder import JSONDecodeError as JSONError
 
+# -- RANDOM VARIATES --
+# TODO
+
+
+# -- SIMULATION I/O --
 # Recursively convert object to JSON string
 def encodeJSON(obj, omitNone = False):
 	match obj:
 		# We need to pull the value out of the enum (matches to int() by default)
 		case IntEnum(): return str(obj.value)
+		case deque(): return encodeJSON(list(obj))
 
 		# Primitives
 		case bool(): return str(obj).lower()
