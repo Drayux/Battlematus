@@ -1,0 +1,17 @@
+{
+	"state": {
+		"round": 0,
+		"first": 0,
+		"position": [
+			"player.debugboi",
+			null,
+			null,
+			null,
+			"player.debuggirl",
+			null,
+			null,
+			null
+		],
+		"bubble": null
+	}
+}

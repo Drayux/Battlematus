@@ -1,0 +1,63 @@
+{
+	"name": "Jill Iceblade",
+	"level": 20,
+	"health": 1500,
+	"mana": 50,
+	"mastery": [
+		false,
+		true,
+		false,
+		false,
+		false,
+		false,
+		false,
+		false,
+		false,
+		false,
+		false
+	],
+	"damage": [
+		[ 0, 0 ],
+		[ 0.3, 5 ],
+		[ 0, 0 ],
+		[ 0, 0 ],
+		[ 0, 0 ],
+		[ 0, 0 ],
+		[ 0, 0 ],
+		[ 0, 0 ],
+		[ 0, 0 ],
+		[ 0, 0 ],
+		[ 0, 0 ]
+	],
+	"resist": [
+		[ 0.20, 0 ],
+		[ 0.20, 0 ],
+		[ 0.20, 0 ],
+		[ 0.20, 0 ],
+		[ 0.20, 0 ],
+		[ 0.20, 0 ],
+		[ 0.20, 0 ],
+		[ 0.20, 0 ],
+		[ 0.20, 0 ],
+		[ 0.20, 0 ],
+		[ 0.20, 0 ]
+	],
+	"accuracy": [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+	"critical": [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+	"block": [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+	"pierce": [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+	"stunres": 0,
+	"healing": [ 0, 0 ],
+	"pipcons": null,
+	"powerpip": 0.3,
+	"shadpip": 0,
+	"archmastery": 0,
+	"startpips": [ 1 ],
+	"maycasts": [],
+	"deck": [
+		"ice.towershield",
+		"ice.frostbeetle",
+		"ice.snowserpent"
+	],
+	"side": []
+}

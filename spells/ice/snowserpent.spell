@@ -1,9 +1,8 @@
-
 {
-	"spell"	: "Thunder Snake",
-	"rate" : 0.7,
-	"school" : 2,
-	"cost" : [ 1, 0, 0, 0, 0, 0, 0, 0, 0 ],
+	"spell"	: "Snow Serpent",
+	"rate" : 0.8,
+	"school" : 1,
+	"cost" : [ 2, 0, 0, 0, 0, 0, 0, 0, 0 ],
 	"scost" : 0,
 	"enchantable" : true,
 	"actions" : [
@@ -11,8 +10,8 @@
 			"type" : 4,
 			"target" : 2,
 			"data" : {
-				"school" : 2,
-				"range" : [ 105, 115, 125, 135, 145 ],
+				"school" : 1,
+				"range" : [ 155, 165, 175, 185, 195 ],
 				"distribution" : [ 0.2, 0.2, 0.2, 0.2, 0.2 ]
 			},
 			"condition": null

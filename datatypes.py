@@ -76,7 +76,7 @@ class EventType(IntEnum):
 	CAST = 1		# Member will cast a spell like normal
 	PET = 2			# Member's pet will cast a spell
 	INTERRUPT = 3	# Boss performs an interrupt (Member should be none if the cast does not technically occur from the boss, pet maycasts also count here)
-	EFFECT = 4		# Secondary spell effect like nightbringer (or possibly Guardian Angel TODO)
+	EFFECT = 4		# Secondary spell effect like nightbringer or beguile (or possibly Guardian Angel TODO)
 
 # Simple enum for pips
 # School pip sorting order: balance, death, fire, ice, life, myth, storm
@@ -187,10 +187,8 @@ class Stats:
 		assert isinstance(data, dict)
 		statRange = range(len(School.__members__))	# Length of arrays for school-specific stats
 
-		self.name = data.get("name", "Magic Man")	# 'Pretty' name for UI
-		self.player = data.get("player", self.mana < 0)
-
 		# -- BASIC STATS --
+		self.name = data.get("name", "Magic Man")	# 'Pretty' name for UI
 		self.level = data.get("level", 1)			# Player level (significant thanks to crit rating 🙂)
 		self.health = data.get("health", 500)		# Maximum health
 		self.mana = data.get("mana", 10)			# Maximum mana
@@ -239,7 +237,7 @@ class Stats:
 		self.archmastery = data.get("archmastery", 0)	# Archmastery rating
 
 		# -- TERTIARY STATS (not listed on profile) --
-		self.startpips = data.get("startpips", [])	# Bonus starting pips (array to support basic or power)
+		self.startpips = [Pip(p) for p in data.get("startpips", [])]	# Bonus starting pips (array to support basic or power)
 		self.maycasts = data.get("maycasts", [])	# Pet maycast cheat IDs (TODO: Add pet happiness casts)
 
 		self.deck = data.get("deck", [])			# Starting deck (important for battle init and reshuffle)
@@ -247,6 +245,9 @@ class Stats:
 
 		# Initial deck archmastery selection
 		self.amschool = Pip(data.get("amschool", Pip.FIRE.value)) 
+
+		# Miscellaneous simulation implementation components
+		self.player = data.get("player", self.mana < 0)
 
 
 # Object to represent Charm, Ward, etc.
@@ -273,7 +274,7 @@ class Action:
 # Data stored statically and referenced when necessary
 # Config file example at 'spells/storm/thundersnake.spell'
 class Spell:
-	def __init__(self, spellID, data):
+	def __init__(self, data):
 		assert isinstance(data, dict)
 
 		# Unlike the state representation, we expect spell definitions to be mostly complete
@@ -282,7 +283,7 @@ class Spell:
 		# Name of the spell
 		self.spell = data.get("spell")
 		if self.spell is None:
-			print(f"WARNING: Spell '{spellID}' has no entry 'spell'")
+			print(f"WARNING: Spell has no spellID entry 'spell'")
 			self.valid = False
 			return
 
@@ -355,8 +356,6 @@ class Spell:
 				return
 			
 			self.actions.append(Action(actiontype, target, data, condition))
-	
-		print(f"Successfully loaded spell {self.spell}")
 
 
 # Battle cheats type

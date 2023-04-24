@@ -1,9 +1,8 @@
-
 {
-	"spell"	: "Thunder Snake",
+	"spell"	: "Lightning Bats",
 	"rate" : 0.7,
 	"school" : 2,
-	"cost" : [ 1, 0, 0, 0, 0, 0, 0, 0, 0 ],
+	"cost" : [ 2, 0, 0, 0, 0, 0, 0, 0, 0 ],
 	"scost" : 0,
 	"enchantable" : true,
 	"actions" : [
@@ -12,7 +11,7 @@
 			"target" : 2,
 			"data" : {
 				"school" : 2,
-				"range" : [ 105, 115, 125, 135, 145 ],
+				"range" : [ 245, 255, 265, 275, 285 ],
 				"distribution" : [ 0.2, 0.2, 0.2, 0.2, 0.2 ]
 			},
 			"condition": null

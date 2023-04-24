@@ -31,12 +31,15 @@ class Simulation:
 		else: self.state = State()
 
 	def __repr__(self):
-		ret = "--------- BATTLE SIMULATION ---------"
+		ret = "--------- BATTLE SIMULATION ---------\n"
 
 		# Get the casting player
 		casterID = ""
 		try: casterID = self.state.events[self.state.eventidx].member
 		except IndexError as _: pass
+
+		# Print round information
+		ret += f"Round: {self.state.round}"
 
 		# Print the battle circle
 		members = []
@@ -49,7 +52,7 @@ class Simulation:
 			name = self.stats[m].name
 			ret += ('\033[4m' if m == casterID else '') + name + ('\033[0m' if m == casterID else '') + "   "
 			members.append(m)
-		
+
 		# Print the members
 		ret += "\n-------------------------------------"
 		# ret += "MEMBERS:"
@@ -115,6 +118,7 @@ class Simulation:
 	
 	# Load the stats associated with a state member
 	# Returns reference to data stored in self.stats dict
+	# TODO: Add support for multiple copies of the same member ID
 	def loadStats(self, memberID, memberState):
 		# Parse memberID into path
 		# TODO: Make sure this works on windows
@@ -131,6 +135,11 @@ class Simulation:
 
 		stats = Stats(data)
 		self.stats[memberID] = stats
+
+		# Load the spell files for all the spells in the member's decks
+		for spellID in (stats.deck + stats.side):
+			if spellID in self.spells: continue
+			self.loadSpell(spellID)
 
 		# Populates unset values with respect to stats in the state (not likely to be called if coming from loadData)
 		if memberState.health < 0: memberState.health = stats.health
@@ -167,11 +176,13 @@ class Simulation:
 		except (FileNotFoundError, JSONError):
 			print(f"WARNING: Spell data {path} could not be parsed")
 			return
+		
 		spell = Spell(data)
-		self.spells[spellID] = spell
+		if not spell.valid: spell = None
+		self.spells[spellID] = spell	# Put the empty spell in the dictionary anyway so we don't keep trying to load it
 
-		# TODO: Figure out what to do with modifier types
-		#    ^^Pretty sure they will be stored in an array in the Spell() class and referenced via index
+		if spell is None: print(f"Failed to load spell {spellID}")
+		else: print(f"Successfully loaded spell {spellID}")
 
 		return spell
 
@@ -231,14 +242,9 @@ class Simulation:
 		# -- Update round components --
 		event = self.state.getEvent()
 		evaluation = self.evalState()
-
-		# Round information
-		print(f"ROUND: {self.state.round}")	# TODO: Add caster index to output
-		print("EVAL:", evaluation)
-		print()
+		print("-- ROUND INFORMATION --")
 
 		if event is None:
-			print("-- PRE-ROUND PHASE --")
 			self.updateRound()
 
 			# Only check for victory at the start of a round
@@ -251,9 +257,15 @@ class Simulation:
 				return False
 
 			event = self.state.getEvent()
+			print()
 
 		# If event is still none, the battle is over but we've failed to detect that
 		assert event is not None
+
+		# Round information
+		print(f"ROUND: {self.state.round}")	# TODO: Add caster index to output
+		print("EVAL:", evaluation)
+		print()
 
 		# Get the caster of interest
 		casterID = event.member						# MemberID of player's turn that we are simulating
@@ -272,6 +284,11 @@ class Simulation:
 		# TODO: Allow manipulation via discards or enchants
 		# ^^loop
 		# TODO: Gather list of targets
+
+		# DEBUGGING OUTPUT
+		spell = self.spells["ice.frostbeetle"]
+		print(f"SPELL: {spell.spell}")
+		print()
 
 		# -- PHASE 4 (Cast) --
 		print("-- CASTING PHASE --")

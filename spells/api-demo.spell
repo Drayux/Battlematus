@@ -8,8 +8,8 @@
 	"cost" : [
 		// simtypes.Pip enum
 
-		1,	// Basic (-1 for X pip spells)
-		0,	// Power (SHOULD ALWAYS BE ZERO)
+		1,	// Basic (If X + 3 pip cost, power should be -1, and this should be the addition)
+		0,	// Power (-1 for X pip spells, else 0)
 		0,	// Balance
 
 		0,	// Death

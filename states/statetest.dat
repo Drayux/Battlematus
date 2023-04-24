@@ -2,7 +2,6 @@
 	"state": {
 		"round": 6,
 		"first": 4,
-		"player": 4,
 		"position": [
 			"player.bobmagicpants",
 			null,

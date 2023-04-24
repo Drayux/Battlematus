@@ -1,0 +1,62 @@
+{
+	"name": "Wolf Stormblade",
+	"level": 20,
+	"health": 1100,
+	"mana": 50,
+	"mastery": [
+		false,
+		false,
+		true,
+		false,
+		false,
+		false,
+		false,
+		false,
+		false,
+		false,
+		false
+	],
+	"damage": [
+		[ 0, 0 ],
+		[ 0, 0 ],
+		[ 0.5, 25 ],
+		[ 0, 0 ],
+		[ 0, 0 ],
+		[ 0, 0 ],
+		[ 0, 0 ],
+		[ 0, 0 ],
+		[ 0, 0 ],
+		[ 0, 0 ],
+		[ 0, 0 ]
+	],
+	"resist": [
+		[ 0.15, 0 ],
+		[ 0.15, 0 ],
+		[ 0.15, 0 ],
+		[ 0.15, 0 ],
+		[ 0.15, 0 ],
+		[ 0.15, 0 ],
+		[ 0.15, 0 ],
+		[ 0.15, 0 ],
+		[ 0.15, 0 ],
+		[ 0.15, 0 ],
+		[ 0.15, 0 ]
+	],
+	"accuracy": [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+	"critical": [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+	"block": [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+	"pierce": [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+	"stunres": 0,
+	"healing": [ 0, 0 ],
+	"pipcons": null,
+	"powerpip": 0.6,
+	"shadpip": 0,
+	"archmastery": 0,
+	"startpips": [ 0 ],
+	"maycasts": [],
+	"deck": [
+		"storm.thundersnake",
+		"storm.lightningbats"
+	],
+	"side": []
+}

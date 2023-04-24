@@ -1,8 +1,7 @@
-
 {
-	"spell"	: "Thunder Snake",
-	"rate" : 0.7,
-	"school" : 2,
+	"spell"	: "Frost Beetle",
+	"rate" : 0.8,
+	"school" : 1,
 	"cost" : [ 1, 0, 0, 0, 0, 0, 0, 0, 0 ],
 	"scost" : 0,
 	"enchantable" : true,
@@ -11,8 +10,8 @@
 			"type" : 4,
 			"target" : 2,
 			"data" : {
-				"school" : 2,
-				"range" : [ 105, 115, 125, 135, 145 ],
+				"school" : 1,
+				"range" : [ 65, 75, 85, 95, 105 ],
 				"distribution" : [ 0.2, 0.2, 0.2, 0.2, 0.2 ]
 			},
 			"condition": null
