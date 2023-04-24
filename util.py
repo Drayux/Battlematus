@@ -6,8 +6,16 @@ from enum import IntEnum
 from json import load, loads
 from json.decoder import JSONDecodeError as JSONError
 
-# -- RANDOM VARIATES --
-# TODO
+from random import seed, randrange
+
+# -- RANDOMNESS --
+# Shuffle a deck in O(n) complexity (in place)
+def shuffle(deck, randseed = None):
+	if isinstance(randseed, int): seed(randseed)
+	for i, spell in enumerate(deck):
+		swp = randrange(i, len(deck))
+		deck[i] = deck[swp]
+		deck[swp] = spell
 
 
 # -- SIMULATION I/O --

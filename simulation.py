@@ -11,19 +11,22 @@ from random import seed, random, uniform
 
 from state import State, Member, Event
 from datatypes import Position, Phase, Spell, Stats, Pip, EventType
-from util import loadJSON
+from util import loadJSON, shuffle
 
 class Simulation:
 	def __init__(self, path = None):
-		# self.state = None
+		# Simulation parameters
+		self.pvp = False	# TODO: Alternative damage calculations and round handling for pvp
+		
+		# Data references
 		self.stats = {}		# Dict of member stats (key: member_id;  value: <types.Stats>)
 		self.spells = {}	# Dict of spells loaded to memory (key: spell_id;  value: <types.Spell)
+		self.agents = {}	# Dict of memberID and agent instance
 
 		# -- NOT IMPLEMENTED UNTIL MUCH LATER --
-		# Likely to be reformatted completely (so we don't run a loop on every action)
-		self.pvp = False	# Alternative damage calculations and round handling for pvp
-		self.cheats = {}	# Dict of <types.cheat>
+		# self.cheats = {}	# TODO: Dict of <types.cheat>
 
+		# Simulation state
 		if isinstance(path, str): self.load(path)
 		else: self.state = State()
 
@@ -38,7 +41,7 @@ class Simulation:
 		# Print the battle circle
 		members = []
 		for i, m in enumerate(self.state.position):
-			if i == 0: ret += "FRIENDLIES:  "
+			if i == 0: ret += "\nFRIENDLIES:  "
 			elif i == 4: ret += "\nOPPONENTS:  "
 			if m is None: continue
 			
@@ -82,6 +85,16 @@ class Simulation:
 		self.state = State(data["state"])
 		for mID, mState in self.state.members.items():
 			self.loadStats(mID, mState)
+
+		# Check that all member specified in the battle position are loaded
+		for mID in self.state.position:
+			if mID is None or mID in self.stats: continue
+			print("WARNING: Member found in battle with no state! (Statefile may be corrupt)")
+
+			# Same logic as Simulation.addMember() but saving the warning and position logic
+			mState = Member()
+			self.state.members[mID] = mState
+			self.loadStats(mID, mState)
 	
 	# Saves state data alongside other important data, like the member list and cheats
 	# Members and cheats can be loaded individually (useful with GUI mode) or all at once
@@ -93,6 +106,8 @@ class Simulation:
 		# ^^We don't want to save all of the attributes of the simulation class
 		data = {
 			"state": loads(str(self.state))
+			# TODO: Add agents here (challenge is that we mostly just want the name of the agent and the history
+			#       we can't really save functions in a json, but we do want to save the specific sub-class)
 		}
 
 		with open(path, "w") as f:
@@ -121,9 +136,14 @@ class Simulation:
 		if memberState.health < 0: memberState.health = stats.health
 		# if memberState.mana < 0: memberState.mana = stats.mana
 		if memberState.amschool == Pip.NONE: memberState.amschool = stats.amschool
-		if memberState.deck is None: memberState.deck = stats.deck.copy()
-		if memberState.side is None: memberState.side = stats.side.copy()
-
+		if memberState.deck is None: 
+			deck = stats.deck.copy()
+			if stats.player: shuffle(deck)
+			memberState.deck = deck
+		if memberState.side is None:
+			side = stats.side.copy()
+			if stats.player: shuffle(side)
+			memberState.side = side
 		if memberState.pips is None:
 			memberState.pips = [Pip.NONE for x in range(7)]
 			memberState.gainPips(stats.startpips)
@@ -160,13 +180,16 @@ class Simulation:
 	# If pos < 0: don't put member into battle circle
 	def addMember(self, memberID: str, pos = -1):
 		assert self.state is not None
-		newMember = Member(None)
+
+		# Load the member's stats and generate their state
+		newMember = Member()
 		self.state.members[memberID] = newMember
 		self.loadStats(memberID, newMember)
+
+		# Drop the new member into the battle
 		if pos <= 0: 
 			print("WARNING: New member created without position in battle!")
-			return
-		
+			return		
 		assert self.state.position[pos] == None
 		self.state.position[pos] = memberID
 
@@ -201,15 +224,21 @@ class Simulation:
 	# Simulate one player round via means of random selection, and update the state immediately
 	# This function exists mostly for the sake of debugging, and determining the structure for the deltatree
 	# selection --> tuple (or array of tuples) for spell selection (spell idx, target idx)
-	#    ^^if enchant, array of tuples should be used; target idx becomes index of spell (assuming enchant is not yet consumed)
 	# Return True if battle should continue, else False
-	def simulate(self, selection = None, randseed = None):
-		if isinstance(randseed, int): seed(seed)
+	def advance(self, randseed = None):
+		if isinstance(randseed, int): seed(randseed)
 
 		# -- Update round components --
 		event = self.state.getEvent()
 		evaluation = self.evalState()
-		if event is None: 
+
+		# Round information
+		print(f"ROUND: {self.state.round}")	# TODO: Add caster index to output
+		print("EVAL:", evaluation)
+		print()
+
+		if event is None:
+			print("-- PRE-ROUND PHASE --")
 			self.updateRound()
 
 			# Only check for victory at the start of a round
@@ -227,39 +256,34 @@ class Simulation:
 		assert event is not None
 
 		# Get the caster of interest
-		caster = event.member					# MemberID of player's turn that we are simulating
-		cstate = self.state.members[caster]		# Reference to caster's state (within the full sim state)
-		cstats = self.stats[caster]				# Reference to the caster's stats
+		casterID = event.member						# MemberID of player's turn that we are simulating
+		cstate = self.state.members[casterID]		# Reference to caster's state (within the full sim state)
+		cstats = self.stats[casterID]				# Reference to the caster's stats
 
-		print(f"ROUND: {self.state.round}")	# TODO: Add caster index to output
-		print("CASTER:", caster)
-		print("EVAL:", evaluation)
-		print()
-
-		# TODO: Somewhere in here, make sure the member can cast at all (they might be out of health)
+		# Make sure the member can cast at all (they might be out of health)
+		if cstate.health <= 0:
+			print(f"{cstats.name} has no health, passing!")
+			return True
 
 		# -- PHASE 2 (Planning phase) --
-		print("-- PHASE TWO : PLANNING --")
+		print("-- PLANNING PHASE --")
+		print(f"CASTER: {cstats.name} ({casterID})")
 		# TODO: Determine / present acceptable cast choices
 		# TODO: Allow manipulation via discards or enchants
 		# ^^loop
 		# TODO: Gather list of targets
 
-		# -- PHASE 3 (Token handling) --
-		print("-- PHASE THREE : TOKENS --")
-		# TODO: Update health (and charms/wards) from tokens (processIncoming() for each)
-
 		# -- PHASE 4 (Cast) --
-		print("-- PHASE FOUR : CAST --")
+		print("-- CASTING PHASE --")
+		outdamage = 0
+		pierce = 0
+
 		# TODO: Check for stun
 		# TODO: Validate pip cost (can the spell be cast)
 		# TODO: Verify / update targets (checks for confused / beguiled)
 		# TODO: Handle dispels and accuracy modifiers
 		# TODO: Consume pips if dispel or success
 		# TODO: Perform critical check
-
-		# -- PHASE 5 (Spell Processing) --
-
 		
 	# -- SIMULATION OPERATION UTILITY --
 

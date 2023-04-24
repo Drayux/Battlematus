@@ -110,15 +110,6 @@ class Member:
 
 		# Deck is array of spell_ids, in the shuffled order
 		# The first seven cards are the client's hand, the latter are available to draw
-		# The shuffle should be randomized for every "battle" but consistent so that states at depth
-		#    can be accurately evaluated
-		# TODO: We may need some sort of way for reshuffle to keep the same seed??
-		#    ^^In retrospect, probably not as only one transition will be required for a given tree
-		#    Other trees are likely to differ as different spells may have been cast before a reshuffle
-		# TODO: Consider a system for the future AI agent that can weight based off of what might be drawn,
-		#    and not what is drawn. (If using this alongside a battle, for example)
-		#    An ML model can likely be trained without this consideration
-		# NOTE: Deck shuffling to be handlied 'as needed' via one iteration of fisher-yates
 		self.deck = data.get("deck")		# If None, parse from member stats during initState()
 		self.side = data.get("side")		# If None, parse from member stats during initState()
 

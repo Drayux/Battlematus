@@ -20,7 +20,30 @@
 		0,	// Myth
 		0	// Storm
 	],
-	"scost" : 0,	// Shadow pip cost
+	"scost" : 0,			// Shadow pip cost
+	"enchantable" : true,	// Can the spell be enchanted
+
+	// Any modifier types to which a spell references
+	// The dictionary is indexed by a unique but arbitrary ID
+	// These can be accessed within a spell class via a tuple of (spellID, modifierID)
+	"modifiers" : {
+		// Modifiers can contain a dictionary...
+		"foomod" : {
+			"type" : 0,		// simtypes.ModType
+			"value" : 0.3
+		},
+		// ...or any array of dictionaries for multiple effects (notably with enchant spells)
+		"barmod" : [
+			{
+				"type": 3,
+				"value": 0.1
+			},
+			{
+				"type": 11,
+				"value": 0.3
+			}
+		]
+	},
 
 	// Spell actions (all applied sequentially in the game)
 	// simtypes.Action
@@ -30,9 +53,10 @@
 			"target" : 2, 	// simtypes.Target
 
 			// Type of data varies based off of spell type
-			// Charm, Ward, Aura, Global --> Modifier object (dict that follows structure seen in state config)
+			// Charm, Ward, Aura, Global --> Modifier object ID
 			// Manipulate --> Dict with values for simtype.Status and int
 			// Damage, Heal, Lifesteal --> Dict of following structure
+			// Enchantment --> Dict of same structure as Modifer (multiple effects uses multiple actions)
 			"data" : {
 				"school" : 2,	// simtypes.School
 				"range" : [105, 115, 125, 135, 145],

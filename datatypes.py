@@ -131,7 +131,7 @@ class DeltaType(IntEnum):
 # Enum for modification object types
 # ^^All possible elements that could be changed by a modifier object (charm, global, etc.)
 # TODO: Consider refactor for incoming versus outgoing
-class ModType(IntEnum):
+class ModifierType(IntEnum):
 	DAMAGE_MULT = 0		# Outgoing
 	DAMAGE_CAP = 1		# Incoming
 	ACCURACY_MOD = 3
@@ -145,10 +145,12 @@ class ModType(IntEnum):
 	# pip chance
 	# pip impede / bonus??
 	# something for dispels
+	# flat damage bonus...etc, etc
+	# aegis/indeminty
 
 
 # Enum for spell config action types
-class Action(IntEnum):
+class ActionType(IntEnum):
 	CHARM = 0
 	WARD = 1
 	AURA = 2
@@ -160,6 +162,7 @@ class Action(IntEnum):
 	MANIPULATE = 7		# Reuse simtypes.Status for which manipulation
 	MODIFY = 8			# Generic type for actions that directly modify state like donate power or donate shadow
 	# 						that don't have counter spells (i.e. stuns have stun block, but there is no 'pip block')
+	ENCHANT = 9			# Reference to modifier type
 
 
 # Enum for spell config targets
@@ -178,13 +181,14 @@ class Target(IntEnum):
 class Stats:
 	# TODO: Consider system to parse stats from gear (likely a seperate tool to generate stat files)
 	# NOTE: For level, if the stats describe a mob, then each rank counts for 5 levels: Basic, Advanced, Elite, (unused), Boss
-	# 		^^Take rank * 5 for level of boss, subtract as necessary (R7B = 5 * 7 = 35)
+	# 		^^Take rank * 5 for level of boss, subtract as necessary (R7B --> 5 * 7 = 35 ; R4A --> 5 * 4 - 3 = 17)
 	def __init__(self, data = None):
 		if data is None: data = {}
 		assert isinstance(data, dict)
 		statRange = range(len(School.__members__))	# Length of arrays for school-specific stats
 
 		self.name = data.get("name", "Magic Man")	# 'Pretty' name for UI
+		self.player = data.get("player", self.mana < 0)
 
 		# -- BASIC STATS --
 		self.level = data.get("level", 1)			# Player level (significant thanks to crit rating 🙂)
@@ -244,24 +248,115 @@ class Stats:
 		# Initial deck archmastery selection
 		self.amschool = Pip(data.get("amschool", Pip.FIRE.value)) 
 
-		# -- MISCELLANEOUS --
-		# Is the member a player or npc (can by implied by mana value, but good to have an explicit value)
-		self.player = data.get("player", self.mana < 0)
 
-
-# -- MODIFIER (Charm, Ward, etc.) OBJECT --
+# Object to represent Charm, Ward, etc.
+# Basically a simple struct with a type and a value
 class Modifier:
-	# These will not have explicit files, so only dictionary types are parsed*
-	def __init__(self, data = None):
-		# Pull the values from the dictionary
-		pass
+	# These do not have explicit files, they are a part of spell files
+	def __init__(self, modtype, value):
+		self.type = ModiferType(modtype)
+		self.value = value
+	
+	# TODO: Consider some form of...
+	# def apply(self, calculation_values): pass
 
+# Object to represent a spell action
+# Very basic structure, similar to modifier
+class Action:
+	def __init__(self, actiontype, target, data, condition = None):
+		self.type = ActionType(actiontype)
+		self.target = Target(target)
+		self.data = data
+		self.condition = condition
 
 # Object that houses the full spell data and action set
 # Data stored statically and referenced when necessary
 # Config file example at 'spells/storm/thundersnake.spell'
 class Spell:
-	pass
+	def __init__(self, spellID, data):
+		assert isinstance(data, dict)
+
+		# Unlike the state representation, we expect spell definitions to be mostly complete
+		self.valid = True
+
+		# Name of the spell
+		self.spell = data.get("spell")
+		if self.spell is None:
+			print(f"WARNING: Spell '{spellID}' has no entry 'spell'")
+			self.valid = False
+			return
+
+		# Cast chance (assumed to be 100%)
+		self.rate = data.get("rate", 1.0)
+
+		# School associated with the spell
+		self.school = data.get("school")
+		if self.school is None:
+			print(f"WARNING: Spell {self.spell} has no entry 'school'")
+			self.valid = False
+			return
+		
+		# Normal pip cost
+		self.cost = data.get("cost", [])
+		if len(self.cost) != 9:
+			print(f"WARNING: Spell {self.spell} has invalid entry for 'cost' (expected array length of 9)")
+			self.valid = False
+			return
+
+		# Shadow pip cost (assumed to be zero)
+		self.scost = data.get("scost", 0)
+
+		# Can the spell be enchanted (Gear and specialty spells cannot, assume this is the case)
+		self.enchantable = data.get("enchantable", False)
+
+		# Core spell data
+		self.modifiers = {}
+		self.actions = []
+
+		# -- Process the spell modifier types --
+		mods = data.get("modifiers", {})
+		if not isinstance(mods, dict):
+			print(f"WARNING: Spell {self.spell} has invalid modifier list (expecting dict or null)")
+			self.valid = False
+			return
+
+		for modID, modData in mods.items():
+			modtype = modData.get("type")
+			value = modData.get("value")
+
+			if modtype is None or value is None:
+				print(f"WARNING: Spell {self.spell} has invalid modifier '{modID}'")
+				self.valid = False
+				return
+			
+			self.modifiers[modID] = Modifier(modtype, value)
+		
+		# -- Process the spell action types --
+		acts = data.get("actions", [])
+		if not isinstance(acts, list) or len(acts) < 1:
+			print(f"WARNING: Spell {self.spell} has invalid or missing action list")
+			self.valid = False
+			return
+		
+		for i, action in enumerate(acts):
+			if not isinstance(action, dict):
+				print(f"WARNING: Spell {self.spell} has invalid action at index {i}")
+				self.valid = False
+				return
+			
+			actiontype = action.get("type")
+			target = action.get("target")
+			data = action.get("data")		# We don't find out if this is formatted incorrectly until later
+			condition = action.get("condition")
+
+			if actiontype is None or target is None or data is None:
+				print(f"WARNING: Spell {self.spell} has invalid action at index {i}")
+				self.valid = False
+				return
+			
+			self.actions.append(Action(actiontype, target, data, condition))
+	
+		print(f"Successfully loaded spell {self.spell}")
 
 
 # Battle cheats type
