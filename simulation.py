@@ -36,7 +36,8 @@ class Simulation:
 		# Get the casting player
 		casterID = ""
 		try: casterID = self.state.events[self.state.eventidx].member
-		except IndexError as _: pass
+		except IndexError as _: 
+			casterID = self.state.position[self.state.first]
 
 		# Print round information
 		ret += f"Round: {self.state.round}"
@@ -185,6 +186,12 @@ class Simulation:
 		else: print(f"Successfully loaded spell {spellID}")
 
 		return spell
+
+	# Loads an agent module
+	# Returns reference to the instantiated object (otherwise saved in self.agents)
+	def loadAgent(self, member, agent):
+		# TODO
+		wario = __import__("simulation")
 
 	# For use with building a state "from scratch"
 	# Loads member stats and adds an entry into the state
