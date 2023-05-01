@@ -13,7 +13,7 @@ class Agent(Abstract):
 
 	# Determines the potential targets for a cast event
 	# This function is not built with the intent of being overridden
-	def getTargets(self, memberID, state):
+	def getTargets(self):
 		# Categorize the battle members
 		wizards = []
 		raise NotImplementedError
