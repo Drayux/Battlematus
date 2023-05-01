@@ -8,9 +8,6 @@
 from agent import Agent as Base
 
 class Agent(Base):
-    def __init__(self):
-        print("Success initializing passing agent class!")
-    
     def selectSpell(self):
         return super().selectSpell()
     

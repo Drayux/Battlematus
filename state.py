@@ -6,7 +6,7 @@
 from collections import deque
 
 from util import encodeJSON, loadJSON
-from datatypes import Pip, Status, EventType
+from datatypes import Pip, StatusEffect, EventType
 
 # NOTE: For awhile I had been really committed to this idea of having defaults that wouldn't be stored
 #		if the value were unchanged. I liked this idea in hopes that it would save the memory usage
@@ -95,7 +95,7 @@ class Member:
 		self.shads = data.get("shads", 0)
 		self.shadprog = data.get("shadprog", 0)		# Current progress towards the next shadow pip (float 0 <= prog < 1)
 
-		# Status is addressed by datatypes.Status
+		# Status is addressed by datatypes.StatusEffect
 		self.status = data.get("status", [0, 0, 0])
 
 		# Reference to Modifier types within spell_id

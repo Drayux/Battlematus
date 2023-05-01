@@ -10,7 +10,7 @@ from os import path as ospath
 from random import seed, random, uniform
 
 from state import State, Member, Event
-from datatypes import Position, Phase, Spell, Stats, Pip, EventType
+from datatypes import Position, Phase, Spell, Stats, Pip, EventType, Status
 from util import loadJSON, shuffle
 
 class Simulation:
@@ -37,7 +37,8 @@ class Simulation:
 		casterID = ""
 		try: casterID = self.state.events[self.state.eventidx].member
 		except IndexError as _: 
-			casterID = self.state.position[self.state.first]
+			# casterID = self.state.position[self.state.first]
+			pass
 
 		# Print round information
 		ret += f"Round: {self.state.round}"
@@ -190,8 +191,8 @@ class Simulation:
 	# Loads an agent module
 	# Returns reference to the instantiated object (otherwise saved in self.agents)
 	def loadAgent(self, member, agent):
-		agentClass = __import__(f"agents.{agent}", fromlist=[ None ])
-		agentInst = agentClass.Agent()
+		agentClass = __import__(f"agents.{agent}", fromlist = [None])
+		agentInst = agentClass.Agent(self, member)
 
 		self.agents[member] = agentInst
 		return agentInst
@@ -242,40 +243,40 @@ class Simulation:
 		# output = DeltaTree(self.state)
 		raise NotImplementedError("Delta tree processing")
 
-	# Simulate one player round via means of random selection, and update the state immediately
-	# This function exists mostly for the sake of debugging, and determining the structure for the deltatree
-	# selection --> tuple (or array of tuples) for spell selection (spell idx, target idx)
-	# Return True if battle should continue, else False
+	# Simulate one battle event, or generate events if none (start of round event)
+	# Returns datatypes.Status regarding simulation state
 	def advance(self, randseed = None):
 		if isinstance(randseed, int): seed(randseed)
 
 		# -- Update round components --
 		event = self.state.getEvent()
 		evaluation = self.evalState()
-		print("-- ROUND INFORMATION --")
 
 		if event is None:
+			print("-- END OF ROUND --")
 			self.updateRound()
 
 			# Only check for victory at the start of a round
 			# Possible for a player to be beguiled and cast rebirth, healing enemy team
 			if evaluation >= 1:
 				print("Player victory!")
-				return False
+				return Status.A_VICTORY
 			if evaluation <= -1:
 				print("Enemy victory :(")
-				return False
+				return Status.B_VICTORY
+			
+			# Round information
+			print(f"ROUND: {self.state.round}")	# TODO: Add caster index to output
+			print("EVAL:", evaluation)
+			return Status.ROUND_END
 
-			event = self.state.getEvent()
-			print()
+			# - Use this block if round update and first event should be simulated immediately (old implimentation)
+			# event = self.state.getEvent()
+			# print()
 
 		# If event is still none, the battle is over but we've failed to detect that
-		assert event is not None
-
-		# Round information
-		print(f"ROUND: {self.state.round}")	# TODO: Add caster index to output
-		print("EVAL:", evaluation)
-		print()
+		# - Use this block if round update and first event should be simulated immediately (old implimentation)
+		# assert event is not None
 
 		# Get the caster of interest
 		casterID = event.member						# MemberID of player's turn that we are simulating
@@ -285,7 +286,7 @@ class Simulation:
 		# Make sure the member can cast at all (they might be out of health)
 		if cstate.health <= 0:
 			print(f"{cstats.name} has no health, passing!")
-			return True
+			return Status.CONTINUE
 
 		# -- PHASE 2 (Planning phase) --
 		print("-- PLANNING PHASE --")
@@ -311,8 +312,10 @@ class Simulation:
 		# TODO: Handle dispels and accuracy modifiers
 		# TODO: Consume pips if dispel or success
 		# TODO: Perform critical check
+
+		return Status.CONTINUE
 		
-	# -- SIMULATION OPERATION UTILITY --
+	# -- SIMULATION OPERATION --
 
 	# Trivial state evaluation operation
 	# Returns 1 if players have won or -1 if enemy has won
@@ -443,43 +446,29 @@ class Simulation:
 		self.state.events = eventsNew
 		self.state.eventidx = 0
 
+	# -- SIMULATION UTLIITY --
+	# Functions here can be reused by things such as the selection agent
+
+	# Determines if a specified spell can be cast by a member
+	def validateSpell(self, selection, cstate, cstats):
+		pass
+	
+	# Determines if a specified spell can be applied to a target member 
+	# Target can be a list of targets for multicast spells
+	def validateTarget(self, selection, caster, target):
+		pass
+
 	# Handle outgoing effects (damage pretty much)
 	# Requires reference to caster's state and caster's stats
-	def processOutgoing(self, cstate, cstats):
+	# apply --> Should the calculated effects be applied to the state (i.e. charms consumed)
+	def processOutgoing(self, cstate, cstats, apply = False):
 		pass
 
-	# Handle incoming effects (also damage)
+	# Handle incoming effects (also damage pretty much)
 	# Requires reference to targets's state and targets's stats
-	def processIncoming(self, tstate, tstats):
+	# apply --> Should the calculated effects be applied to the state (i.e. traps consumed)
+	def processIncoming(self, tstate, tstats, apply = False):
 		pass
-
-	# Determine if combat is over
-	# Returns negative if 'player' victory; 0 if battle is still going; positive if 'NPC' victory
-	# UPDATES state.player
-	# TODO: Refactor to split nextCaster() mechanic and win condition
-	def getNextCasterOLD(self, length = 8):
-		state = self.state		# Reference for clarity
-		if length < 0: length = len(state.position)
-
-		dead = 0				# Number of 'dead' players per side
-		x = state.player
-		for i in range(1, length):
-			idx = (x + i) % length
-			player = state.order[idx]
-			if player is None:
-				dead += 1
-				
-			# Wizard's engine finishes all casts per 'side' even if battle was already won
-			else:
-				state.player = idx
-				return 0
-			
-			# Check dead counter
-			if dead >= 4: return -1 if x <= 3 else 1
-			elif i % 4 == 3: dead = 0
-		
-		print("WARNING: battleWon() did not return in the loop!")
-		return 0
 
 
 # Helper class for the DeltaTree

@@ -5,6 +5,14 @@ from enum import IntEnum
 
 # -- SIMULATION CORE --
 
+class Status(IntEnum):
+	CONTINUE = 0
+	ROUND_END = 1
+	A_VICTORY = 2
+	B_VICTORY = 3
+	STALEMATE = -1		# Not a feature of Wizard101, but necessary for model training
+
+
 # Battle sigil member position
 # Enum values are array indices
 class Position(IntEnum):
@@ -108,7 +116,7 @@ class Pip(IntEnum):
 
 # Enum for battle status (stunned, beguiled, confused)
 # Int values are tuple (array) positions
-class Status(IntEnum):
+class StatusEffect(IntEnum):
 	STUNNED = 0
 	BEGUILED = 1
 	CONFUSED = 2
