@@ -190,8 +190,11 @@ class Simulation:
 	# Loads an agent module
 	# Returns reference to the instantiated object (otherwise saved in self.agents)
 	def loadAgent(self, member, agent):
-		# TODO
-		wario = __import__("simulation")
+		agentClass = __import__(f"agents.{agent}", fromlist=[ None ])
+		agentInst = agentClass.Agent()
+
+		self.agents[member] = agentInst
+		return agentInst
 
 	# For use with building a state "from scratch"
 	# Loads member stats and adds an entry into the state
@@ -222,7 +225,7 @@ class Simulation:
 
 		# Important overrides
 		mstateNew.health = health
-		memberState.pips = [Pip.NONE for x in range(7)]
+		mstateNew.pips = [Pip.NONE for x in range(7)]
 
 		# Copy over values that do not reset
 		mstateNew.amschool = mstateOld.amschool
