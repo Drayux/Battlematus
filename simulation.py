@@ -10,13 +10,14 @@ from os import path as ospath
 from random import seed, random, uniform
 
 from state import State, Member, Event
-from datatypes import Position, Phase, Spell, Stats, Pip, EventType, Status
+from datatypes import Position, Phase, Spell, Stats, Pip, EventType, Status. StatusEffect
 from util import loadJSON, shuffle
 
 class Simulation:
 	def __init__(self, path = None):
 		# Simulation parameters
-		self.pvp = False	# TODO: Alternative damage calculations and round handling for pvp
+		self.pvpDamage = False		# TODO: Alternative damage calculations for pvp
+		self.pvpPlanning = True		# TODO: If False, all members plan their attacks at once (use event system to handle this)
 		
 		# Data references
 		self.stats = {}		# Dict of member stats (key: member_id;  value: <types.Stats>)
@@ -87,6 +88,7 @@ class Simulation:
 			return
 
 		# Initialize the state
+		# NOTE: Ideal simulation files will have entries for all members here, even if their state is unmodified
 		self.state = State(data["state"])
 		for mID, mState in self.state.members.items():
 			self.loadStats(mID, mState)
@@ -100,23 +102,33 @@ class Simulation:
 			mState = Member()
 			self.state.members[mID] = mState
 			self.loadStats(mID, mState)
+		
+		# Initialize cast selection agents
+		agents = data.get("agents", {})
+		for mID, agent in agents.items():
+			self.loadAgent(mID, agent)
 	
 	# Saves state data alongside other important data, like the member list and cheats
 	# Members and cheats can be loaded individually (useful with GUI mode) or all at once
 	#   from file (useful with model training applications)
 	# TODO CREATE DIRECTORY AND FILETYPE ASSUMPTION
 	def save(self, path):
+		# Format the state field
+		# loads(dumps(state)) is a bit weird, but it ensures we call the right JSON encoding function
+		stateDict = loads(str(self.state))
+
+		# Format the agents field
+		agentsDict = {}
+		for mID, agent in self.agents.items():
+			agentsDict[mID] = str(agent)
+
 		# Define the output file structure
-		# loads(dumps(state)) is a bit weird, but an easy way to convert our class to a dict using our method
-		# ^^We don't want to save all of the attributes of the simulation class
 		data = {
-			"state": loads(str(self.state))
-			# TODO: Add agents here (challenge is that we mostly just want the name of the agent and the history
-			#       we can't really save functions in a json, but we do want to save the specific sub-class)
+			"state": stateDict,
+			"agents": agentsDict
 		}
 
-		with open(path, "w") as f:
-			json.dump(data, f)
+		with open(path, "w") as f: dump(data, f)
 	
 	# Load the stats associated with a state member
 	# Returns reference to data stored in self.stats dict
@@ -160,7 +172,8 @@ class Simulation:
 			memberState.gainPips(stats.startpips)
 
 		# Load the cheats associated with the stats object
-		print("TODO: [simulation.py] loadStats(): generate cheat types and save them to sim data")
+		# print("TODO: [simulation.py] loadStats(): generate cheat types and save them to sim data")
+		print(f"Successfully loaded member '{memberID}' ({stats.name})")
 
 		return stats
 
@@ -183,18 +196,27 @@ class Simulation:
 		if not spell.valid: spell = None
 		self.spells[spellID] = spell	# Put the empty spell in the dictionary anyway so we don't keep trying to load it
 
-		if spell is None: print(f"Failed to load spell {spellID}")
-		else: print(f"Successfully loaded spell {spellID}")
+		if spell is None: print(f"Failed to load spell '{spellID}'")
+		else: print(f"Successfully loaded spell '{spellID}' ({spell.spell})")
 
 		return spell
 
 	# Loads an agent module
 	# Returns reference to the instantiated object (otherwise saved in self.agents)
+	# member -> Member ID
+	# agent -> Filename of agent excluding agents/ and .py ( ./agents/{agent}.py )
 	def loadAgent(self, member, agent):
+		# Make sure that the member exists
+		if not member in self.stats:
+			print(f"WARNING: Initializing agent '{agent}' for nonexistent member '{member}' -- SKIPPING!")
+			return None
+
 		agentClass = __import__(f"agents.{agent}", fromlist = [None])
 		agentInst = agentClass.Agent(self, member)
-
 		self.agents[member] = agentInst
+
+		print(f"Successfully loaded agent '{agent}' for member '{member}'")
+
 		return agentInst
 
 	# For use with building a state "from scratch"
@@ -270,39 +292,61 @@ class Simulation:
 			print("EVAL:", evaluation)
 			return Status.ROUND_END
 
-			# - Use this block if round update and first event should be simulated immediately (old implimentation)
+			# - Use this block if round update and first event should be simulated immediately (old implementation)
 			# event = self.state.getEvent()
 			# print()
 
 		# If event is still none, the battle is over but we've failed to detect that
-		# - Use this block if round update and first event should be simulated immediately (old implimentation)
+		# - Use this block if round update and first event should be simulated immediately (old implementation)
 		# assert event is not None
 
 		# Get the caster of interest
 		casterID = event.member						# MemberID of player's turn that we are simulating
 		cstate = self.state.members[casterID]		# Reference to caster's state (within the full sim state)
 		cstats = self.stats[casterID]				# Reference to the caster's stats
+		cagent = self.agents[casterID]				# Reference to the caster's casting agent
 
 		# Make sure the member can cast at all (they might be out of health)
 		if cstate.health <= 0:
 			print(f"{cstats.name} has no health, passing!")
 			return Status.CONTINUE
 
-		# -- PHASE 2 (Planning phase) --
+		# -- PLANNING PHASE --
+		# TODO: Handle non-PvP planning (in retrospect, I'll probably do this while generating events)
 		print("-- PLANNING PHASE --")
-		print(f"CASTER: {cstats.name} ({casterID})")
-		# TODO: Determine / present acceptable cast choices
-		# TODO: Allow manipulation via discards or enchants
-		# ^^loop
-		# TODO: Gather list of targets
+		# If planning event, we need to update the event
+		if event.type == EventType.PLAN:
+			# Call upon the cast agent to determine the spell selection
+			selection = cagent.select()
 
+			# Resolve status effects (NOTE: This happens after selection as the deck can be manipulated while stunned)
+			if cstate.status[StatusEffect.STUNNED] > 0:
+				# If stunned, resolve to pass
+				event.type = EventType.PASS
+				break
+
+			# TODO: If beguiled, do nothing? (this would be seen in our validate target function)
+			# TODO: If confused and passing, randomize spell selection (LATER)
+		
 		# DEBUGGING OUTPUT
 		spell = self.spells["ice.frostbeetle"]
 		print(f"SPELL: {spell.spell}")
 		print()
 
-		# -- PHASE 4 (Cast) --
+		# -- CAST PHASE --
 		print("-- CASTING PHASE --")
+		print(f"CASTER: {cstats.name} ({casterID})")
+
+		# Parse the event
+		match event.type:
+			case EventType.PLAN: raise AssertionError("Event type was never updated")
+			case EventType.PASS: pass
+			case EventType.CAST: pass
+			case EventType.PET: raise NotImplementedError("Pet maycasts ( simulation.py:advance() )")
+			case EventType.INTERRUPT: raise NotImplementedError("Battle cheats ( simulation.py:advance() )")
+			case EventType.EFFECT: raise NotImplementedError("Advanced spell effects ( simulation.py:advance() )")
+			
+		# TODO: Calculate damage
 		outdamage = 0
 		pierce = 0
 
@@ -392,14 +436,12 @@ class Simulation:
 			# Add the planning phase
 			eventsNew.append(Event(memberID))
 
-			# Update the member's state
 			# -- PIPS --
 			piparr = []		# Pips to gain (for Member.gainPips() )
-
 			# TODO: Check for pip bonus stat (thinking sugar rush cheat from those cube bois)
 
 			# Generate pip based off of powerpip stat
-			# TODO: Determine method for bosses lie hades who conditionally gain an extra with consideration for his pp chance
+			# TODO: Determine method for bosses like hades who conditionally gain an extra with consideration for his pp chance
 			print(f"Generating pip for member {memberID} with chance {mstats.powerpip}", end = ": ")
 			if mstats.powerpip > random(): 
 				piparr.append(Pip.POWER)
@@ -415,6 +457,8 @@ class Simulation:
 			# TODO: Convert to powpip to ampip if conditions are met (else update progression)
 			# TODO: Generate shadow pip if conditions are met (else update progression)
 
+			# -- DECK --
+			if not mstats.player
 
 		# Update round-transient events
 		# This is the implementation that I hate, but in reality, it's akin to insertion sort
@@ -450,13 +494,14 @@ class Simulation:
 	# Functions here can be reused by things such as the selection agent
 
 	# Determines if a specified spell can be cast by a member
-	def validateSpell(self, selection, cstate, cstats):
+	def validateSpell(self, spell, cstate, cstats):
 		pass
 	
 	# Determines if a specified spell can be applied to a target member 
 	# Target can be a list of targets for multicast spells
-	def validateTarget(self, selection, caster, target):
-		pass
+	def validateTarget(self, spell, caster, target):
+		targetValid = True
+		# TODO
 
 	# Handle outgoing effects (damage pretty much)
 	# Requires reference to caster's state and caster's stats

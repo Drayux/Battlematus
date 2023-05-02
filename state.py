@@ -24,6 +24,7 @@ class State:
 	#   None for new state (with defaults)
 	#   JSON-encoded string with partial (or full) data
 	#   Filepath to JSON-encoded string
+	# TODO: When implimenting cast agent history, embed said data within THIS class
 	def __init__(self, data = None):
 		if data is None: data = {}
 		if isinstance(data, str):
@@ -105,6 +106,7 @@ class Member:
 		
 		self.tokens = deque()
 		tokens = data.get("tokens")
+		# TODO: Apparently tokens can also be protected so we need to handle that
 		if isinstance(tokens, list):							# TODO: Determine what stats should be tracked (such as pierce??)
 			for t in tokens: self.tokens.append((t[0], t[1]))	# Tokens are tuple of (Rounds remaining, damage)
 
@@ -112,6 +114,7 @@ class Member:
 		# The first seven cards are the client's hand, the latter are available to draw
 		self.deck = data.get("deck")		# If None, parse from member stats during initState()
 		self.side = data.get("side")		# If None, parse from member stats during initState()
+		self.hand = data.get("hand", 7)		# Scalar to specify the number of cards in the player's hand (all deck manipulations happen via this class)
 
 		# Archmastery components
 		self.amschool = Pip(data.get("amschool", Pip.NONE.value))	# The selected archmastery school (note that Pip.BASIC and Pip.POWER are invalid selections)
@@ -154,6 +157,9 @@ class Member:
 		
 		self.sortPips()
 
+	# TODO: PIP CONSUMPTION UPON SPELL CAST
+	def consumePips(self, apply = False): pass
+
 	# Counting sort for player pips (makes consumption logic trivial)
 	def sortPips(self, length = 7):
 		assert len(self.pips) == length
@@ -189,10 +195,39 @@ class Member:
 
 		return (mastery, nonmastery)
 
+	# Returns index of spell in hand matching a certain id (array if multiple or None if nothing)
+	# enchants -> Whether to include enchanted versions (-1 no enchants, 0 both, 1 only enchants)
+	def getSpellIndex(self, spellID, enchants = 0):
+		ret = []
+		for i, spell in self.deck:
+			if i >= self.hand: break
+
+			incl = enchants * (1 if isinstance(spell, tuple) else -1)
+			if incl >= 0: ret.append(i)
+		
+		if len(ret) == 0: return None
+		if len(ret) == 1: return ret[0]
+		return ret
+
+	# Discard a spell at the specified index
+	# idx -> Index of spell to discard
+	# spellData -> Reference to simulation's spells dict (for determining if spell can be discarded)
+	# Returns True if success, else False
+	def discardSpell(self, idx, spellData):
+		pass
+
+	# Enchant a spell at the specified index
+	# idxBase -> Index of spell to be enchanted
+	# idxEnch -> Index of the enchant spell to be applied to the spell at idxBase
+	# spellData -> Reference to simulation's spells dict (for determining if spell can be discarded)
+	# Returns True if success, else False
+	def enchantSpell(self, idxBase, idxEnch, spellData):
+		pass
+
 	# Get the distribution of spells still in the deck
 	# Use this to predict what is more or less likely to be drawn (probably for AI agent)
 	# side -> Whether to use main deck or TCs
-	def spellDistribution(self, side = False):
+	def calcSpellDist(self, side = False):
 		dist = {}
 
 		deck = self.side if side else self.deck
@@ -216,12 +251,15 @@ class Event:
 		self.delay = data.get("delay", 0)
 		self.member = data.get("member", member)
 		self.spell = data.get("spell", None)
+		self.target = data.get("target", None)
 
 		# How the event should be ordered if carried across rounds
 		# I really hate this implementation but I cannot think of anything that I like better
 		# Extra event order possibilities: Start/end of round, start/end of turn, or interrupt
 		self.local = data.get("local", True)		# Event happens before / after cast (alternatively the entire round)
 		self.before = data.get("before", True)		# Event happens before local / global
+		# self.order  <--  Primary ordering scalar
+		# self.priority  <--  Secondary ordering scalar
 
 		# NOTE: Event ordering refactor (for some point in the future)
 
@@ -234,7 +272,7 @@ class Event:
 		# order is stored via the location in state.position)
 		# And the second part, being the time relative to the member's turn
 
-		# Each member turn should consist of at most one "CAST" event--this is time zero.
+		# Each member turn should consist of at most one "CAST/PLAN" event--this is time zero.
 		# This value can be inferred for any situation I imagine possible (cheats we just know via
 		# the cheat scripting, and nightbringer can be assumed to be -1, etc.)
 		# Round events are before or after all members, so we use either -1 or some big number like 999

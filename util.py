@@ -9,13 +9,13 @@ from json.decoder import JSONDecodeError as JSONError
 from random import seed, randrange
 
 # -- RANDOMNESS --
-# Shuffle a deck in O(n) complexity (in place)
-def shuffle(deck, randseed = None):
+# Shuffle a array in O(n) complexity (in place)
+def shuffle(arr, randseed = None):
 	if isinstance(randseed, int): seed(randseed)
-	for i, spell in enumerate(deck):
-		swp = randrange(i, len(deck))
-		deck[i] = deck[swp]
-		deck[swp] = spell
+	for i, data in enumerate(arr):
+		swp = randrange(i, len(arr))
+		arr[i] = arr[swp]
+		arr[swp] = data
 
 
 # -- SIMULATION I/O --

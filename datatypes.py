@@ -10,7 +10,8 @@ class Status(IntEnum):
 	ROUND_END = 1
 	A_VICTORY = 2
 	B_VICTORY = 3
-	STALEMATE = -1		# Not a feature of Wizard101, but necessary for model training
+	ERROR = -1			# Simulation has encountered and error and should stop
+	STALEMATE = -2		# Not a feature of Wizard101, but necessary for model training
 
 
 # Battle sigil member position
@@ -79,7 +80,8 @@ class Healing(IntEnum):
 
 # Cast event types
 class EventType(IntEnum):
-	PLAN = -1		# Associated member should be presented the planning phase
+	# ALL_PLAN = -2	# TODO: Something like this to handle non PvP planning
+	PLAN = -1		# Associated member should be presented the planning phase (important because this changes how we handle the deck)
 	PASS = 0		# Member has selected pass
 	CAST = 1		# Member will cast a spell like normal
 	PET = 2			# Member's pet will cast a spell
