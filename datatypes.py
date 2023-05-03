@@ -83,7 +83,7 @@ class EventType(IntEnum):
 	# ALL_PLAN = -2	# TODO: Something like this to handle non PvP planning
 	PLAN = -1		# Associated member should be presented the planning phase (important because this changes how we handle the deck)
 	PASS = 0		# Member has selected pass
-	CAST = 1		# Member will cast a spell like normal
+	CAST = 1		# Member will cast a spell like normal (only used once spell selection has been verified - Allows things like steal pip to not cancel an existing selection)
 	PET = 2			# Member's pet will cast a spell
 	INTERRUPT = 3	# Boss performs an interrupt (Member should be none if the cast does not technically occur from the boss, pet maycasts also count here)
 	EFFECT = 4		# Secondary spell effect like nightbringer or beguile (or possibly Guardian Angel TODO)
@@ -198,11 +198,12 @@ class Stats:
 		statRange = range(len(School.__members__))	# Length of arrays for school-specific stats
 
 		# -- BASIC STATS --
-		self.name = data.get("name", "Magic Man")	# 'Pretty' name for UI
-		self.level = data.get("level", 1)			# Player level (significant thanks to crit rating 🙂)
-		self.health = data.get("health", 500)		# Maximum health
-		self.mana = data.get("mana", 10)			# Maximum mana
-		self.mastery = data.get("mastery")			# School mastery (multiple masteries possible, hence array)
+		self.name = data.get("name", "Magic Man")		# 'Pretty' name for UI
+		self.level = data.get("level", 1)				# Player level (significant thanks to crit rating 🙂)
+		self.health = data.get("health", 500)			# Maximum health
+		self.mana = data.get("mana", 10)				# Maximum mana
+		self.player = data.get("player", self.mana < 0)	# Should the member be treated as a player or NPC
+		self.mastery = data.get("mastery")				# School mastery (multiple masteries possible, hence array)
 		if self.mastery is None: self.mastery = [False for x in statRange]
 
 		# -- PRIMARY STATS --
@@ -255,9 +256,6 @@ class Stats:
 
 		# Initial deck archmastery selection
 		self.amschool = Pip(data.get("amschool", Pip.FIRE.value)) 
-
-		# Miscellaneous simulation implementation components
-		self.player = data.get("player", self.mana < 0)
 
 
 # Object to represent Charm, Ward, etc.

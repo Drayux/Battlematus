@@ -78,6 +78,8 @@ class Member:
 	#    Health, Mana, Deck (main and side and archmastery selection)
 	#	 Anything that can be a bonus, such as pips
 	#    Everything else we can init to 'zero'
+	# TODO: Missing shadow spell components including transformations, dark nova, and backlash
+	# TODO: Track spells such that a TC cannot be discarded the same round it is drawn
 	def __init__(self, data = None):
 		if data is None: data = {}
 		assert isinstance(data, dict)
@@ -158,6 +160,8 @@ class Member:
 		self.sortPips()
 
 	# TODO: PIP CONSUMPTION UPON SPELL CAST
+	# Will consume pips up to a spell cost (even if spell cost exceeds possessed pips)
+	# Returns scalar value of pips consumed (basically only relevant for X-cost spells)
 	def consumePips(self, apply = False): pass
 
 	# Counting sort for player pips (makes consumption logic trivial)

@@ -3,6 +3,7 @@
 	"level": 20,
 	"health": 1500,
 	"mana": 50,
+	"player": false,
 	"mastery": [
 		false,
 		true,
@@ -55,9 +56,7 @@
 	"startpips": [ 1 ],
 	"maycasts": [],
 	"deck": [
-		"ice.towershield",
-		"ice.frostbeetle",
-		"ice.snowserpent"
+		"ice.frostbeetle"
 	],
 	"side": []
 }

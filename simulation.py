@@ -7,10 +7,11 @@
 from json import load, loads, dump
 from json.decoder import JSONDecodeError as JSONError
 from os import path as ospath
-from random import seed, random, uniform
+from math import floor
+from random import seed, random, uniform, choice, randrange	# TODO REMOVE CHOICE AND USE WEIGHTED METHOD OF SELECTION
 
 from state import State, Member, Event
-from datatypes import Position, Phase, Spell, Stats, Pip, EventType, Status. StatusEffect
+from datatypes import * # ActionType, Position, Phase, Spell, Stats, Pip, EventType, Status, StatusEffect
 from util import loadJSON, shuffle
 
 class Simulation:
@@ -74,6 +75,12 @@ class Simulation:
 			ret += f"\n\033[1m{mstats.name}\033[0m"
 			ret += f"\nHealth: {mstate.health} / {mstats.health}"
 			ret += f"\nPips: {pipsstr} {mstate.countPips()}"
+
+			# Status effects (if any)
+			stunned, beguiled, confused = mstate.status[0], mstate.status[1], mstate.status[2]
+			if stunned > 0: ret += f"\nStunned: {stunned} round{'s' if stunned > 1 else ''}"
+			if beguiled > 0: ret += f"\nBeguiled: {beguiled} round{'s' if beguiled > 1 else ''}"
+			if confused > 0: ret += f"\nConfused: {confused} round{'s' if confused > 1 else ''}"
 		
 		return ret
 
@@ -313,52 +320,134 @@ class Simulation:
 
 		# -- PLANNING PHASE --
 		# TODO: Handle non-PvP planning (in retrospect, I'll probably do this while generating events)
-		print("-- PLANNING PHASE --")
-		# If planning event, we need to update the event
-		if event.type == EventType.PLAN:
-			# Call upon the cast agent to determine the spell selection
-			selection = cagent.select()
+		# For simulation output
+		passReason = "Pass"
 
-			# Resolve status effects (NOTE: This happens after selection as the deck can be manipulated while stunned)
+		# Update certain event types to resolve status effects
+		# TODO: Determine if other types are relevant (i.e. can pet maycasts or nightbringer be cancelled by a stun?)
+		if event.type == EventType.CAST:
 			if cstate.status[StatusEffect.STUNNED] > 0:
-				# If stunned, resolve to pass
 				event.type = EventType.PASS
-				break
+				passReason = "Stunned"
 
 			# TODO: If beguiled, do nothing? (this would be seen in our validate target function)
 			# TODO: If confused and passing, randomize spell selection (LATER)
-		
-		# DEBUGGING OUTPUT
-		spell = self.spells["ice.frostbeetle"]
-		print(f"SPELL: {spell.spell}")
-		print()
+
+		elif event.type == EventType.PLAN:
+			print("-- PLANNING PHASE --")
+
+			# Call upon the cast agent to determine the spell selection
+			spellIdx, target = cagent.select()		# DEBUG: Allow agent to modify hand and get index
+			print(f"Selection: {spellIdx}, {target}")
+
+			# This happens after selection as the deck can be manipulated while stunned)
+			if cstate.status[StatusEffect.STUNNED] > 0:
+				event.type = EventType.PASS
+				passReason = "Stunned"
+
+			# Parse selected spell and update the event (verify and pull from hand)
+			# TODO: I cannot figure out when / how I should verify the targets
+			# Assuming my assertion of pip cost is correct, once the cast is planned and the cost is verified
+			#    then the member is committed to casting the spell, even if they lose pips before the cast
+			#    However, it is very possible that the target dies or is 'unattackable' at the time of the
+			#    cast, hence, I believe that targets should be validated / processed during the cast event (only)
+			# 	 If the target fails to validate, then the cast should resolve to a pass and not consume pips / accuracy charms
+			if self.validateSpell(casterID, target, spellIdx):
+				event.type = EventType.CAST
+				event.spell = cstate.deck[spellIdx]
+				event.target = target
+
+				# TODO: Consider moving this to member function?
+				if cstats.player:
+					cstate.deck.pop(spellIdx)
+					cstate.hand -= 1
+			
+			else: event.type = EventType.PASS
 
 		# -- CAST PHASE --
 		print("-- CASTING PHASE --")
 		print(f"CASTER: {cstats.name} ({casterID})")
 
+		# TODO: Tokens
+
 		# Parse the event
+		# TODO: Backlash and aura experation happen after a turn, so ensure these are handled before resolving a pass
 		match event.type:
 			case EventType.PLAN: raise AssertionError("Event type was never updated")
-			case EventType.PASS: pass
-			case EventType.CAST: pass
+			case EventType.PASS:
+				print(f"SPELL: < {passReason} >")
+				return Status.CONTINUE
 			case EventType.PET: raise NotImplementedError("Pet maycasts ( simulation.py:advance() )")
 			case EventType.INTERRUPT: raise NotImplementedError("Battle cheats ( simulation.py:advance() )")
 			case EventType.EFFECT: raise NotImplementedError("Advanced spell effects ( simulation.py:advance() )")
-			
-		# TODO: Calculate damage
-		outdamage = 0
-		pierce = 0
+			case EventType.CAST: pass
+		
+		# spell = self.spells["ice.frostbeetle"]	# DEBUGGING
+		selection = self.spells[event.spell]
+		spell, enchant = selection if isinstance(selection, tuple) else (selection, None)
+		print(f"SPELL: {spell.spell}")
 
-		# TODO: Check for stun
+		targets = event.target if (event.target is None or isinstance(event.target, list)) else [event.target]	# Obtain state and stats within loop
+		if targets is not None: print(f"TARGET: {[Position(x).name for x in targets]}")
+
 		# TODO: Validate pip cost (can the spell be cast)
 		# TODO: Verify / update targets (checks for confused / beguiled)
-		# TODO: Handle dispels and accuracy modifiers
-		# TODO: Consume pips if dispel or success
+
+		# Handle fizzle event (shuffle back into deck if player)
+		# TODO: Handle dispels and accuracy charms / enchants
+		dispel = False		# TODO: Ensure a dispel reshuffles the spell back into the deck
+		fizzle = not ((spell.rate + cstats.accuracy[spell.school]) > random())
+		if dispel or fizzle:
+			print(f"Fizzle{' (dispel)' if dispel else ''}")
+
+			insertIdx = randrange(0, len(cstate.deck) + 1)
+			cstate.deck.insert(insertIdx, selection)
+			return Status.CONTINUE
+
 		# TODO: Perform critical check
 
-		return Status.CONTINUE
+		# -- TODO: Calculate damage --
+		# NOTE: Current implementation is very very basic and mostly wrong but just for demonstration
+		# outdamage = 0
+		# pierce = 0
+		damage = 0
+		for action in spell.actions:
+			if action.type != ActionType.DAMAGE: continue
+			try: damage += floor(choice(action.data["range"]) * (1 + cstats.damage[action.data["school"]][0]))
+			except KeyError:
+				print(f"WARNING: Action data for '{event.spell}' ({spell.spell}) is invalid!")
+				return Status.ERROR
 		
+		targetID = self.state.position[targets[0]]
+		tstate = None
+		tstats = None
+		if targetID is not None:
+			tstate = self.state.members[targetID]
+			tstats = self.stats[targetID]
+
+			# Apply the damage...kinda
+			tstate.health = max(0, tstate.health - (4 * damage))
+			print(f"{damage} damage dealt to {tstats.name}")
+		# ----------------------------
+
+		# TODO: Consume pips if dispel or success
+
+		return Status.CONTINUE
+	
+	# Run the simulation (via advance() until completion)
+	def run(self):
+		while True:
+			result = self.advance()
+			match result:
+				case Status.CONTINUE: pass
+				case Status.ROUND_END: 
+					print(self.__repr__())
+					print()
+				case _:
+					print("-- SIMULATION END --\n")
+					# print(str(self.state))
+					return
+
 	# -- SIMULATION OPERATION --
 
 	# Trivial state evaluation operation
@@ -433,6 +522,12 @@ class Simulation:
 				# TODO: else reset state
 				continue
 
+			# Update member status effects
+			for effect in mstate.status:
+				if effect > 0: effect -= 1
+			
+			# TODO: Update other timers, such as auras, shadow spells?? (maybe in events), and token duration (also maybe)
+
 			# Add the planning phase
 			eventsNew.append(Event(memberID))
 
@@ -443,10 +538,10 @@ class Simulation:
 			# Generate pip based off of powerpip stat
 			# TODO: Determine method for bosses like hades who conditionally gain an extra with consideration for his pp chance
 			print(f"Generating pip for member {memberID} with chance {mstats.powerpip}", end = ": ")
-			if mstats.powerpip > random(): 
+			if mstats.powerpip > random():
 				piparr.append(Pip.POWER)
 				print("POWER")
-			else: 
+			else:
 				piparr.append(Pip.BASIC)
 				print("BASIC")
 
@@ -458,7 +553,8 @@ class Simulation:
 			# TODO: Generate shadow pip if conditions are met (else update progression)
 
 			# -- DECK --
-			if not mstats.player
+			if mstats.player:
+				mstate.hand = 7
 
 		# Update round-transient events
 		# This is the implementation that I hate, but in reality, it's akin to insertion sort
@@ -493,15 +589,16 @@ class Simulation:
 	# -- SIMULATION UTLIITY --
 	# Functions here can be reused by things such as the selection agent
 
-	# Determines if a specified spell can be cast by a member
-	def validateSpell(self, spell, cstate, cstats):
-		pass
-	
-	# Determines if a specified spell can be applied to a target member 
+	# TODO: Determines if a specified spell can be cast by a member
 	# Target can be a list of targets for multicast spells
-	def validateTarget(self, spell, caster, target):
-		targetValid = True
-		# TODO
+	def validateSpell(self, casterIdx, targetIdx, spellIdx):
+		if spellIdx is None: return False
+		# TODO: If spell is not valid, print some message about what spell was attempted and why it failed
+		return True
+
+	# TODO: Ensure that the caster's selected targets can be applied to their selected spell
+	def validateTargets(self):
+		return True
 
 	# Handle outgoing effects (damage pretty much)
 	# Requires reference to caster's state and caster's stats

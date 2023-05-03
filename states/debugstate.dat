@@ -15,7 +15,7 @@
 		"bubble": null
 	},
 	"agents": {
-		"player.debugboi": "Debug_Pass",
-		"player.debuggirl": "Debug_Pass"
+		"player.debugboi": "Debug_Basic",
+		"player.debuggirl": "Debug_Basic2"
 	}
 }

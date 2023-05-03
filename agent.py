@@ -19,6 +19,7 @@ class Agent(Abstract):
 		return self.__module__.split(".")[-1]
 
 	# Determines the potential targets for a cast event
+	# TODO: Consider moving this to a simulation class member function
 	# This function is not built with the intent of being overridden (excluding wild cheats like HoH)
 	# spell -> spellID of intended cast
 	def getTargets(self):

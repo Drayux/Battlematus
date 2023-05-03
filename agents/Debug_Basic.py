@@ -1,5 +1,6 @@
 # -- AGENT INFO --
-# Basic debugging agent which will always pass if possible.
+# Basic debugging agent which will always return the spell at the first index.
+# Good for testing a single spell - Set the player stats as an NPC with their deck as a single spell
 
 # ================
 
@@ -10,4 +11,4 @@ from agent import Agent as Base
 
 class Agent(Base):
     def select(self):
-        return None, None
+        return 0, 4
