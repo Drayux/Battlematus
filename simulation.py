@@ -426,7 +426,7 @@ class Simulation:
 			tstats = self.stats[targetID]
 
 			# Apply the damage...kinda
-			tstate.health = max(0, tstate.health - (4 * damage))
+			tstate.health = max(0, tstate.health - (damage))
 			print(f"{damage} damage dealt to {tstats.name}")
 		# ----------------------------
 
