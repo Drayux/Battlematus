@@ -1,0 +1,22 @@
+{
+	"spell"	: "Tower Shield",
+	"rate" : 1.0,
+	"school" : 1,
+	"cost" : [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+	"scost" : 0,
+	"enchantable" : true,
+    "modifiers" : {
+        "ward0" : {
+            "type" : 0,
+            "value" : 0.5
+        }
+    },
+	"actions" : [
+		{
+			"type" : 1,
+			"target" : 1,
+			"data" : "ward0",
+			"condition": null
+		}
+	]
+}

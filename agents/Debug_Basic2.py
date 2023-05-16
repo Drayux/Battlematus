@@ -9,6 +9,25 @@
 from agent import Agent as Base
 # from agent import AgentState
 
+from random import random
+
 class Agent(Base):
     def select(self):
-        return 0, 0
+        # return 0, 0
+
+        spellIdx = None
+        weights = [0.3, 0.2, 0.2]   # Pass = 0.3
+        rand = random()
+        cum = 0
+        for i, x in enumerate(weights):
+            cum += x
+            if cum > rand: 
+                spellIdx = i
+                break
+        
+        # Blade is cast on self
+        target = 0
+        if spellIdx == 0:
+            target = 4
+        
+        return spellIdx, target

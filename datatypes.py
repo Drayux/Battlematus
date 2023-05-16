@@ -248,7 +248,8 @@ class Stats:
 		self.archmastery = data.get("archmastery", 0)	# Archmastery rating
 
 		# -- TERTIARY STATS (not listed on profile) --
-		self.startpips = [Pip(p) for p in data.get("startpips", [])]	# Bonus starting pips (array to support basic or power)
+		# (TODO: Some enemies gain multiple pips that have a chance to be normal or power)
+		self.startpips = [Pip(p) for p in data.get("startpips", [])]	# Bonus starting pips
 		self.maycasts = data.get("maycasts", [])	# Pet maycast cheat IDs (TODO: Add pet happiness casts)
 
 		self.deck = data.get("deck", [])			# Starting deck (important for battle init and reshuffle)
@@ -263,7 +264,7 @@ class Stats:
 class Modifier:
 	# These do not have explicit files, they are a part of spell files
 	def __init__(self, modtype, value):
-		self.type = ModiferType(modtype)
+		self.type = ModifierType(modtype)
 		self.value = value
 	
 	# TODO: Consider some form of...

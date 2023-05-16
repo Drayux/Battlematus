@@ -74,7 +74,11 @@ class Simulation:
 
 			ret += f"\n\033[1m{mstats.name}\033[0m"
 			ret += f"\nHealth: {mstate.health} / {mstats.health}"
+
+			# TODO: Redo these...
 			ret += f"\nPips: {pipsstr} {mstate.countPips()}"
+			if len(mstate.charms) > 0: ret += f"\nCharms: {len(mstate.charms)}"
+			if len(mstate.wards) > 0: ret += f"\nWards: {len(mstate.wards)}"
 
 			# Status effects (if any)
 			stunned, beguiled, confused = mstate.status[0], mstate.status[1], mstate.status[2]
@@ -175,7 +179,8 @@ class Simulation:
 			if stats.player: shuffle(side)
 			memberState.side = side
 		if memberState.pips is None:
-			memberState.pips = [Pip.NONE for x in range(7)]
+			# memberState.pips = [Pip.NONE for x in range(7)]
+			memberState.pips = [0 for x in range(len(Pip.__members__))]
 			memberState.gainPips(stats.startpips)
 
 		# Load the cheats associated with the stats object
@@ -255,7 +260,8 @@ class Simulation:
 
 		# Important overrides
 		mstateNew.health = health
-		mstateNew.pips = [Pip.NONE for x in range(7)]
+		# mstateNew.pips = [Pip.NONE for x in range(7)]
+		mstateNew.pips = [0 for x in range(len(Pip.__members__))]
 
 		# Copy over values that do not reset
 		mstateNew.amschool = mstateOld.amschool
@@ -321,14 +327,14 @@ class Simulation:
 		# -- PLANNING PHASE --
 		# TODO: Handle non-PvP planning (in retrospect, I'll probably do this while generating events)
 		# For simulation output
-		passReason = "Pass"
+		passDesc = "Pass"
 
 		# Update certain event types to resolve status effects
 		# TODO: Determine if other types are relevant (i.e. can pet maycasts or nightbringer be cancelled by a stun?)
 		if event.type == EventType.CAST:
 			if cstate.status[StatusEffect.STUNNED] > 0:
 				event.type = EventType.PASS
-				passReason = "Stunned"
+				passDesc = "Stunned"
 
 			# TODO: If beguiled, do nothing? (this would be seen in our validate target function)
 			# TODO: If confused and passing, randomize spell selection (LATER)
@@ -343,7 +349,11 @@ class Simulation:
 			# This happens after selection as the deck can be manipulated while stunned)
 			if cstate.status[StatusEffect.STUNNED] > 0:
 				event.type = EventType.PASS
-				passReason = "Stunned"
+				passDesc = "Stunned"
+
+			elif spellIdx is None:
+				event.type = EventType.PASS
+				# passDesc already set
 
 			# Parse selected spell and update the event (verify and pull from hand)
 			# TODO: I cannot figure out when / how I should verify the targets
@@ -352,7 +362,7 @@ class Simulation:
 			#    However, it is very possible that the target dies or is 'unattackable' at the time of the
 			#    cast, hence, I believe that targets should be validated / processed during the cast event (only)
 			# 	 If the target fails to validate, then the cast should resolve to a pass and not consume pips / accuracy charms
-			if self.validateSpell(casterID, target, spellIdx):
+			elif self.validateSpell(casterID, target, spellIdx):
 				event.type = EventType.CAST
 				event.spell = cstate.deck[spellIdx]
 				event.target = target
@@ -362,7 +372,9 @@ class Simulation:
 					cstate.deck.pop(spellIdx)
 					cstate.hand -= 1
 			
-			else: event.type = EventType.PASS
+			else: 
+				event.type = EventType.PASS
+				passDesc = "Invalid"
 
 		# -- CAST PHASE --
 		print("-- CASTING PHASE --")
@@ -375,7 +387,7 @@ class Simulation:
 		match event.type:
 			case EventType.PLAN: raise AssertionError("Event type was never updated")
 			case EventType.PASS:
-				print(f"SPELL: < {passReason} >")
+				print(f"SPELL: < {passDesc} >")
 				return Status.CONTINUE
 			case EventType.PET: raise NotImplementedError("Pet maycasts ( simulation.py:advance() )")
 			case EventType.INTERRUPT: raise NotImplementedError("Battle cheats ( simulation.py:advance() )")
@@ -383,51 +395,111 @@ class Simulation:
 			case EventType.CAST: pass
 		
 		# spell = self.spells["ice.frostbeetle"]	# DEBUGGING
-		selection = self.spells[event.spell]
+		spellID = event.spell
+		selection = self.spells[spellID]
 		spell, enchant = selection if isinstance(selection, tuple) else (selection, None)
 		print(f"SPELL: {spell.spell}")
 
 		targets = event.target if (event.target is None or isinstance(event.target, list)) else [event.target]	# Obtain state and stats within loop
 		if targets is not None: print(f"TARGET: {[Position(x).name for x in targets]}")
 
-		# TODO: Validate pip cost (can the spell be cast)
 		# TODO: Verify / update targets (checks for confused / beguiled)
 
 		# Handle fizzle event (shuffle back into deck if player)
 		# TODO: Handle dispels and accuracy charms / enchants
 		dispel = False		# TODO: Ensure a dispel reshuffles the spell back into the deck
 		fizzle = not ((spell.rate + cstats.accuracy[spell.school]) > random())
+		if dispel: cstate.consumePips(spell.cost, cstats.mastery[spell.school], spell.scost, True)
 		if dispel or fizzle:
 			print(f"Fizzle{' (dispel)' if dispel else ''}")
 
+			if not cstats.player: return Status.CONTINUE
+
 			insertIdx = randrange(0, len(cstate.deck) + 1)
-			cstate.deck.insert(insertIdx, selection)
+			cstate.deck.insert(insertIdx, spellID)
 			return Status.CONTINUE
+
+		# Cast was successful, consume pip cost
+		cstate.consumePips(spell.cost, cstats.mastery[spell.school], spell.scost, True)
 
 		# TODO: Perform critical check
 
 		# -- TODO: Calculate damage --
+		# TODO: For spell refactor...
+		# A major consideration is applying blades to the spell
+		# Something like minotaur will see a benefit in both hits from a single myth blade
+		# Yet, a hydra will only see a benefit to the storm hit with a storm blade, yet every hit with a balance blade
 		# NOTE: Current implementation is very very basic and mostly wrong but just for demonstration
-		# outdamage = 0
+		outgoingMod = 1 + cstats.damage[spell.school][0]	# NOTE: This is technically wrong but close enough for now
+		incomingMod = 1
 		# pierce = 0
-		damage = 0
-		for action in spell.actions:
-			if action.type != ActionType.DAMAGE: continue
-			try: damage += floor(choice(action.data["range"]) * (1 + cstats.damage[action.data["school"]][0]))
-			except KeyError:
-				print(f"WARNING: Action data for '{event.spell}' ({spell.spell}) is invalid!")
-				return Status.ERROR
-		
+
 		targetID = self.state.position[targets[0]]
 		tstate = None
 		tstats = None
 		if targetID is not None:
 			tstate = self.state.members[targetID]
 			tstats = self.stats[targetID]
+		else: return Status.ERROR
 
-			# Apply the damage...kinda
-			tstate.health = max(0, tstate.health - (damage))
-			print(f"{damage} damage dealt to {tstats.name}")
+		for action in spell.actions:
+			match action.type:
+				case ActionType.CHARM:
+					tstate.charms.insert(0, spellID + "-" + action.data)
+
+				case ActionType.WARD:
+					tstate.wards.insert(0, spellID + "-" + action.data)
+
+				case ActionType.DAMAGE:
+					base = floor(choice(action.data["range"]))
+
+					# -- Actual damage to pull from current spell API --
+					# (1 + cstats.damage[action.data["school"]][0]))
+					# except KeyError:
+					# 	print(f"WARNING: Action data for '{spellID}' ({spell.spell}) is invalid!")
+					# 	return Status.ERROR
+
+					# Calculate outoing damage
+					charmUsed = False
+					for charm in cstate.charms:
+						if isinstance(charm, list): raise NotImplementedError("Modifier types with multiple effects")
+						name = charm.split("-")
+						charmSID, charmID = name[0], name[1]
+						modifier = self.spells[charmSID].modifiers[charmID]
+
+						if modifier.type == ModifierType.DAMAGE_MULT:
+							outgoingMod *= 1 + modifier.value
+
+							# Hacky way to consume only one charm because there's only one spell right now
+							charmUsed = True
+							break
+
+					if charmUsed: cstate.charms.pop()
+		
+					# Calculate incoming damage
+					wardUsed = False
+					for ward in tstate.wards:
+						if isinstance(ward, list): raise NotImplementedError("Modifier types with multiple effects")
+						name = ward.split("-")
+						wardSID, wardID = name[0], name[1]
+						modifier = self.spells[wardSID].modifiers[wardID]
+
+						if modifier.type == ModifierType.DAMAGE_MULT:
+							incomingMod *= 1 - modifier.value
+
+							# Equally hacky solution for basic demo
+							wardUsed = True
+							break
+					
+					if wardUsed: tstate.wards.pop()
+
+					# NOTE: Also wrong but alas
+					incomingMod *= 1 - tstats.resist[spell.school][0]
+					damage = round(base * outgoingMod * incomingMod)
+
+					tstate.health = max(0, tstate.health - (damage))
+					print(f"{damage} damage dealt to {tstats.name}")
+					print(f"DEBUG: {base} * {outgoingMod} * {incomingMod}")
 		# ----------------------------
 
 		# TODO: Consume pips if dispel or success
@@ -532,6 +604,8 @@ class Simulation:
 			eventsNew.append(Event(memberID))
 
 			# -- PIPS --
+			# TODO: Swap to mstate.generatePip() function
+
 			piparr = []		# Pips to gain (for Member.gainPips() )
 			# TODO: Check for pip bonus stat (thinking sugar rush cheat from those cube bois)
 
@@ -591,9 +665,26 @@ class Simulation:
 
 	# TODO: Determines if a specified spell can be cast by a member
 	# Target can be a list of targets for multicast spells
-	def validateSpell(self, casterIdx, targetIdx, spellIdx):
+	def validateSpell(self, casterID, targetIdx, spellIdx):
 		if spellIdx is None: return False
 		# TODO: If spell is not valid, print some message about what spell was attempted and why it failed
+		# Check pip cost of spell
+		cstate = self.state.members[casterID]
+		cstats = self.stats[casterID]
+
+		# TODO: Condition for making sure a player doesn't cast > idx 6
+		if spellIdx >= len(cstate.deck):
+			print(f"{cstats.name} attempted to selected a spell index out of range ({spellIdx})")
+			return False
+
+		spellID = cstate.deck[spellIdx]
+		spell = self.spells[spellID]
+		spellCost = spell.cost
+		mastery = cstats.mastery[spell.school]
+		power = cstate.consumePips(spellCost, mastery)
+		if power < 0:
+			print(f"{cstats.name} does not have enough pips to cast {spell.spell}")
+			return False
 		return True
 
 	# TODO: Ensure that the caster's selected targets can be applied to their selected spell

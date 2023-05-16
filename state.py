@@ -4,6 +4,7 @@
 # Members can be initalized from file
 
 from collections import deque
+from random import random
 
 from util import encodeJSON, loadJSON
 from datatypes import Pip, StatusEffect, EventType
@@ -88,12 +89,15 @@ class Member:
 		self.health = data.get("health", -1)
 		# self.mana = getattr(data, "mana", -1)		# TODO if using mana, consider specification for inifinite mana (PvP / Mob)
 
+		# DEPRICATED PIPS SYSTEM
 		# Pips are enum type, so cast the value from the raw data
-		pipsarr = [Pip(p) for p in data.get("pips", [])]
-		if len(pipsarr) > 0:
-			self.pips = [Pip.NONE for x in range(7)]
-			self.gainPips(pipsarr)
-		else: self.pips = None
+		# pipsarr = [Pip(p) for p in data.get("pips", [])]
+		# if len(pipsarr) > 0:
+		# 	self.pips = [Pip.NONE for x in range(7)]
+		# 	self.gainPips(pipsarr)
+		# else: self.pips = None
+
+		self.pips = data.get("pips", None)
 
 		self.shads = data.get("shads", 0)
 		self.shadprog = data.get("shadprog", 0)		# Current progress towards the next shadow pip (float 0 <= prog < 1)
@@ -137,10 +141,32 @@ class Member:
 	def __str__(self):
 		return encodeJSON(self)
 	
+	# Give the member new pips from a list
+	# Assume input list specifies precedence
+	# NOTE: The precedence of giving school pips is unknown
+	def gainPips(self, piparr):
+		# Count the number of pips currently owned
+		count = 7
+		for x in self.pips:
+			if count <= 0: return
+			count -= x
+		
+		# Obtain pips (TODO: Consider sorting this with a known order?)
+		for i, pip in enumerate(piparr):
+			if i >= count: return
+			assert isinstance(pip, Pip)
+			self.pips[pip.value] += 1
+
+	# TODO: Generate pips for the member (traditionally start of round)
+	# Optional variables are available in the member state
+	# TODO: Add components for archmastery
+	def generatePips(self, count, chance = -1):
+		pass
+
 	# Give the member new pips
 	# NOTE: Assume array already sorted!
 	# NOTE: Pips should only be via this method
-	def gainPips(self, piparr):
+	def gainPipsOLD(self, piparr):
 		# Determine current pip count
 		count = 0
 		noobIdx = -1	# If a noob pip was found, save the index here
@@ -162,7 +188,29 @@ class Member:
 	# TODO: PIP CONSUMPTION UPON SPELL CAST
 	# Will consume pips up to a spell cost (even if spell cost exceeds possessed pips)
 	# Returns scalar value of pips consumed (basically only relevant for X-cost spells)
-	def consumePips(self, apply = False): pass
+	def consumePips(self, cost, mastery = True, scost = 0, apply = False):
+		# TODO: Anything with archmastery pips or X casting cost
+		# TODO: Shadow pip consumption
+
+		total = cost[0]
+		power = 0
+		if mastery: power = min(self.pips[1], int(total / 2))
+		basic = total - (2 * power)
+
+		# Start by consuming basic pips, using powers as overflow
+		if basic > self.pips[0]:
+			power += basic - self.pips[0]
+			basic = self.pips[0]
+
+		if power > self.pips[1]:
+			return -1
+		
+		if apply:
+			self.pips[0] -= basic
+			self.pips[1] -= power
+
+		return basic + (power * (2 if mastery else 1))
+
 
 	# Counting sort for player pips (makes consumption logic trivial)
 	def sortPips(self, length = 7):

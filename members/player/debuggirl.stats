@@ -50,13 +50,15 @@
 	"stunres": 0,
 	"healing": [ 0, 0 ],
 	"pipcons": null,
-	"powerpip": 0.3,
+	"powerpip": 0.2,
 	"shadpip": 0,
 	"archmastery": 0,
 	"startpips": [ 1 ],
 	"maycasts": [],
 	"deck": [
-		"ice.frostbeetle"
+		"ice.towershield",
+		"ice.frostbeetle",
+		"ice.snowserpent"
 	],
 	"side": []
 }
